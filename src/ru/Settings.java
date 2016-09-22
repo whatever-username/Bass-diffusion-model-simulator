@@ -11,9 +11,9 @@ public class Settings implements Serializable{
     public int
             from1to2LowerTreshold, from2to3LowerTreshold,from3to4LowerTreshold,from4to3LowerTreshold,
             from1to2UpperTreshold, from2to3UpperTreshold,from3to4UpperTreshold,from4to3UpperTreshold,
-            from1to2SelfChance,from2to3SelfChance,from3to4SelfChance,from4to3SelfChance,
-            buffFromPositiveNeighbour,buffFromNegativeNeighbour,buffFromNewNeighbour,
             fieldWidth, fieldHeight;
+    public double from1to2SelfChance,from2to3SelfChance,from3to4SelfChance,from4to3SelfChance,
+            buffFromPositiveNeighbour,buffFromNegativeNeighbour,buffFromNewNeighbour;
     public boolean isChangingMind;
     public static void saveSettings() {
         FileOutputStream fos = null;

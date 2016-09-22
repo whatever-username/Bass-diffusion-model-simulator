@@ -177,7 +177,7 @@ public class SimulationFrame extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 Main.processing = false;
                 try{
-                    Main.manager.writeToFileSimulated("C:\\Users\\техносила\\Google Диск\\Java Projects\\Текущие\\Graph\\out\\plotSimulated.csv",1, false);
+                    Main.manager.writeToFileSimulated("plotSimulated1.csv",1, false);
 //                    Main.manager.writeToFileBass("C:\\Users\\техносила\\Google Диск\\Java Projects\\Текущие\\Graph\\out\\plotBass.csv");
 //                    Main.manager.writeBothToFile("C:\\Users\\техносила\\Google Диск\\Java Projects\\Текущие\\Graph\\out\\bothPlots.csv");
                 }catch (Exception ex){

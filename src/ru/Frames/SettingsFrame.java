@@ -282,13 +282,21 @@ public class SettingsFrame extends JFrame {
                 Main.settings.from4to3UpperTreshold = Integer.parseInt(from4to3UpperTreshold.getText());
                 Main.settings.fieldWidth = Integer.parseInt(fieldWidth.getText());
                 Main.settings.fieldHeight = Integer.parseInt(fieldHeight.getText());
-                Main.settings.from1to2SelfChance = Integer.parseInt(from1to2SelfChance.getText());
-                Main.settings.from2to3SelfChance = Integer.parseInt(from2to3SelfChance.getText());
-                Main.settings.from3to4SelfChance = Integer.parseInt(from3to4SelfChance.getText());
-                Main.settings.from4to3SelfChance = Integer.parseInt(from4to3SelfChance.getText());
-                Main.settings.buffFromNegativeNeighbour = Integer.parseInt(buffFromNegativeNeighbour.getText());
-                Main.settings.buffFromPositiveNeighbour = Integer.parseInt(buffFromPositiveNeighbour.getText());
-                Main.settings.buffFromNewNeighbour = Integer.parseInt(buffFromNewNeighbour.getText());
+//                Main.settings.from1to2SelfChance = Integer.parseInt(from1to2SelfChance.getText());
+//                Main.settings.from2to3SelfChance = Integer.parseInt(from2to3SelfChance.getText());
+//                Main.settings.from3to4SelfChance = Integer.parseInt(from3to4SelfChance.getText());
+//                Main.settings.from4to3SelfChance = Integer.parseInt(from4to3SelfChance.getText());
+//                Main.settings.buffFromNegativeNeighbour = Integer.parseInt(buffFromNegativeNeighbour.getText());
+//                Main.settings.buffFromPositiveNeighbour = Integer.parseInt(buffFromPositiveNeighbour.getText());
+//                Main.settings.buffFromNewNeighbour = Integer.parseInt(buffFromNewNeighbour.getText());
+                Main.settings.from1to2SelfChance = Double.parseDouble(from1to2SelfChance.getText());
+                Main.settings.from2to3SelfChance = Double.parseDouble(from2to3SelfChance.getText());
+                Main.settings.from3to4SelfChance = Double.parseDouble(from3to4SelfChance.getText());
+                Main.settings.from4to3SelfChance = Double.parseDouble(from4to3SelfChance.getText());
+                Main.settings.buffFromNegativeNeighbour = Double.parseDouble(buffFromNegativeNeighbour.getText());
+                Main.settings.buffFromPositiveNeighbour = Double.parseDouble(buffFromPositiveNeighbour.getText());
+                Main.settings.buffFromNewNeighbour = Double.parseDouble(buffFromNewNeighbour.getText());
+
                 Settings.saveSettings();
                 Main.fieldManager.initializeBlack();
                 setVisible(false);

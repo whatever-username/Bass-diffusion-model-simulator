@@ -87,7 +87,7 @@ public class FieldManager {
                 }
 
                 //расчет состояния в зависимости от типа клетки
-                int chance = 0;
+                double chance = 0;
                 try {
                     switch (Main.field[height][width].getType()) {
                         case 0: //0-не пользовавшийся, 1- новый , 2 -удаливший, 3- пользующийся повторно
@@ -208,7 +208,7 @@ public class FieldManager {
                         }
                     }
                 }
-                int chance=0;
+                double chance=0;
 
                 switch (Main.field[height][width].getType()){
                     case 0: /*пустой*/
