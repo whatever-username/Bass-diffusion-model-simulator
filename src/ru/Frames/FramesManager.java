@@ -16,7 +16,7 @@ public class FramesManager {
     public static SimulationFrame simulationFrame;
     public static boolean readyForSimulation = false;
     public static void initializeFrames() throws IOException, ClassNotFoundException, InterruptedException {
-        settingsFrame = new SettingsFrame();
+
         while (true){
             if (readyForSimulation == false){
                 Thread.sleep(10);
@@ -24,6 +24,9 @@ public class FramesManager {
                 break;
             }
         }
+
+
+
         simulationFrame = new SimulationFrame();
         simulationFrame.setVisible(true);
 

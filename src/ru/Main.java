@@ -23,10 +23,9 @@ public class Main {
     public static GraphicsOutputManager manager;
     public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
         manager = new GraphicsOutputManager();
-        InitThread thread = new InitThread();
-
-        thread.run();
-
+        Thread thread = new Thread(new InitThread());
+        thread.start();
+        thread.join();
         FieldManager.initializeBlack();
         while (true){
             if (FramesManager.simulationFrame!=null){

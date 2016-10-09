@@ -6,6 +6,7 @@ import java.io.IOException;
 
 /**
  * Created by Innokentiy on 11.09.2016.
+ * Used for consistent initialisation of frames
  */
 public class InitThread implements Runnable {
 

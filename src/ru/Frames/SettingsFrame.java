@@ -14,25 +14,27 @@ import ru.Settings;
  * Created by техносила on 11.09.2016.
  */
 public class SettingsFrame extends JFrame {
+    JLabel
+            typeOfModelLabel, fieldWidthLabel, fieldHeightLabel,
+            from1to2LowerTresholdLabel, from2to3LowerTresholdLabel, from3to4LowerTresholdLabel, from4to3LowerTresholdLabel,
+            from1to2UpperTresholdLabel, from2to3UpperTresholdLabel, from3to4UpperTresholdLabel, from4to3UpperTresholdLabel,
+            from1to2SelfChanceLabel, from2to3SelfChanceLabel, from3to4SelfChanceLabel, from4to3SelfChanceLabel,
+            buffFromPositiveNeighbourLabel, buffFromNegativeNeighbourLabel, buffFromNewNeighbourLabel,
+            isChangingMindLabel;
+
+    JTextField
+            from1to2LowerTreshold, from2to3LowerTreshold, from3to4LowerTreshold, from4to3LowerTreshold,
+            from1to2UpperTreshold, from2to3UpperTreshold, from3to4UpperTreshold, from4to3UpperTreshold,
+            from1to2SelfChance, from2to3SelfChance, from3to4SelfChance, from4to3SelfChance,
+            buffFromPositiveNeighbour, buffFromNegativeNeighbour, buffFromNewNeighbour,
+            fieldWidth, fieldHeight;
+
+    JCheckBox isChangingMind;
+    JButton start;
+    JComboBox wayList;
     public SettingsFrame() throws IOException, ClassNotFoundException {
-        JLabel
-                typeOfModelLabel, fieldWidthLabel, fieldHeightLabel,
-                from1to2LowerTresholdLabel, from2to3LowerTresholdLabel, from3to4LowerTresholdLabel, from4to3LowerTresholdLabel,
-                from1to2UpperTresholdLabel, from2to3UpperTresholdLabel, from3to4UpperTresholdLabel, from4to3UpperTresholdLabel,
-                from1to2SelfChanceLabel, from2to3SelfChanceLabel, from3to4SelfChanceLabel, from4to3SelfChanceLabel,
-                buffFromPositiveNeighbourLabel, buffFromNegativeNeighbourLabel, buffFromNewNeighbourLabel,
-                isChangingMindLabel;
 
-        JTextField
-                from1to2LowerTreshold, from2to3LowerTreshold, from3to4LowerTreshold, from4to3LowerTreshold,
-                from1to2UpperTreshold, from2to3UpperTreshold, from3to4UpperTreshold, from4to3UpperTreshold,
-                from1to2SelfChance, from2to3SelfChance, from3to4SelfChance, from4to3SelfChance,
-                buffFromPositiveNeighbour, buffFromNegativeNeighbour, buffFromNewNeighbour,
-                fieldWidth, fieldHeight;
 
-        JCheckBox isChangingMind;
-        JButton start;
-        JComboBox wayList;
         String[] ways = {"Fill in randomly", "Blank field", "DNR Edition"};
         GridBagConstraints gbc = new GridBagConstraints();
         setName("Model");
@@ -302,6 +304,7 @@ public class SettingsFrame extends JFrame {
                 setVisible(false);
                 //Продолжить выполнение в программе             ПЕРЕХОД КО ВТОРОМУ ОКНУ
                 FramesManager.readyForSimulation = true;
+
             }
         });
         add(start, gbc);
