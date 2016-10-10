@@ -43,7 +43,7 @@
 ////        FileInputStream fis = new FileInputStream(settingsFile);
 ////
 ////        ObjectInputStream oin = new ObjectInputStream(fis);
-////        Main.settings = (Settings) oin.readObject();
+////        context.settings = (Settings) oin.readObject();
 ////
 ////        int row = 0;
 ////
@@ -67,7 +67,7 @@
 ////        gbc.gridx = 0;
 ////        gbc.gridy = row;
 ////        add(fieldWidthLabel, gbc);
-////        fieldWidth = new JTextField((Main.settings.fieldWidth + ""), 10);
+////        fieldWidth = new JTextField((context.settings.fieldWidth + ""), 10);
 ////        gbc.gridx = 1;
 ////        gbc.gridy = row;
 ////        add(fieldWidth, gbc);
@@ -78,7 +78,7 @@
 ////        gbc.gridy = row;
 ////        gbc.insets = new Insets(0, 0, 8, 0);
 ////        add(fieldHeightLabel, gbc);
-////        fieldHeight = new JTextField(Main.settings.fieldHeight + "", 10);
+////        fieldHeight = new JTextField(context.settings.fieldHeight + "", 10);
 ////        gbc.gridx = 1;
 ////        gbc.gridy = row;
 ////        add(fieldHeight, gbc);
@@ -89,7 +89,7 @@
 ////        gbc.gridx = 0;
 ////        gbc.gridy = row;
 ////        add(from1to2LowerTresholdLabel, gbc);
-////        from1to2LowerTreshold = new JTextField(Main.settings.from1to2LowerTreshold + "", 10);
+////        from1to2LowerTreshold = new JTextField(context.settings.from1to2LowerTreshold + "", 10);
 ////        gbc.gridx = 1;
 ////        gbc.gridy = row;
 ////        add(from1to2LowerTreshold, gbc);
@@ -100,7 +100,7 @@
 ////        gbc.gridx = 0;
 ////        gbc.gridy = row;
 ////        add(from1to2UpperTresholdLabel, gbc);
-////        from1to2UpperTreshold = new JTextField(Main.settings.from1to2UpperTreshold + "", 10);
+////        from1to2UpperTreshold = new JTextField(context.settings.from1to2UpperTreshold + "", 10);
 ////        gbc.gridx = 1;
 ////        gbc.gridy = row;
 ////        add(from1to2UpperTreshold, gbc);
@@ -113,7 +113,7 @@
 ////        gbc.gridx = 0;
 ////        gbc.gridy = row;
 ////        add(from2to3LowerTresholdLabel, gbc);
-////        from2to3LowerTreshold = new JTextField(Main.settings.from2to3LowerTreshold + "", 10);
+////        from2to3LowerTreshold = new JTextField(context.settings.from2to3LowerTreshold + "", 10);
 ////        gbc.gridx = 1;
 ////        gbc.gridy = row;
 ////        add(from2to3LowerTreshold, gbc);
@@ -123,7 +123,7 @@
 ////        gbc.gridx = 0;
 ////        gbc.gridy = row;
 ////        add(from2to3UpperTresholdLabel, gbc);
-////        from2to3UpperTreshold = new JTextField(Main.settings.from2to3UpperTreshold + "", 10);
+////        from2to3UpperTreshold = new JTextField(context.settings.from2to3UpperTreshold + "", 10);
 ////        gbc.gridx = 1;
 ////        gbc.gridy = row;
 ////        add(from2to3UpperTreshold, gbc);
@@ -134,7 +134,7 @@
 ////        gbc.gridx = 0;
 ////        gbc.gridy = row;
 ////        add(from3to4LowerTresholdLabel, gbc);
-////        from3to4LowerTreshold = new JTextField(Main.settings.from3to4LowerTreshold + "", 10);
+////        from3to4LowerTreshold = new JTextField(context.settings.from3to4LowerTreshold + "", 10);
 ////        gbc.gridx = 1;
 ////        gbc.gridy = row;
 ////        add(from3to4LowerTreshold, gbc);
@@ -144,7 +144,7 @@
 ////        gbc.gridx = 0;
 ////        gbc.gridy = row;
 ////        add(from3to4UpperTresholdLabel, gbc);
-////        from3to4UpperTreshold = new JTextField(Main.settings.from3to4UpperTreshold + "", 10);
+////        from3to4UpperTreshold = new JTextField(context.settings.from3to4UpperTreshold + "", 10);
 ////        gbc.gridx = 1;
 ////        gbc.gridy = row;
 ////        add(from3to4UpperTreshold, gbc);
@@ -155,7 +155,7 @@
 ////        gbc.gridx = 0;
 ////        gbc.gridy = row;
 ////        add(from4to3LowerTresholdLabel, gbc);
-////        from4to3LowerTreshold = new JTextField(Main.settings.from4to3LowerTreshold + "", 10);
+////        from4to3LowerTreshold = new JTextField(context.settings.from4to3LowerTreshold + "", 10);
 ////        gbc.gridx = 1;
 ////        gbc.gridy = row;
 ////        add(from4to3LowerTreshold, gbc);
@@ -165,7 +165,7 @@
 ////        gbc.gridx = 0;
 ////        gbc.gridy = row;
 ////        add(from4to3UpperTresholdLabel, gbc);
-////        from4to3UpperTreshold = new JTextField(Main.settings.from4to3UpperTreshold + "", 10);
+////        from4to3UpperTreshold = new JTextField(context.settings.from4to3UpperTreshold + "", 10);
 ////        gbc.gridx = 1;
 ////        gbc.gridy = row;
 ////        add(from4to3UpperTreshold, gbc);
@@ -177,7 +177,7 @@
 ////        gbc.gridx = 0;
 ////        gbc.gridy = row;
 ////        add(from1to2SelfChanceLabel, gbc);
-////        from1to2SelfChance = new JTextField(Main.settings.from1to2SelfChance + "", 10);
+////        from1to2SelfChance = new JTextField(context.settings.from1to2SelfChance + "", 10);
 ////        gbc.gridx = 1;
 ////        gbc.gridy = row;
 ////        add(from1to2SelfChance, gbc);
@@ -188,7 +188,7 @@
 ////        gbc.gridx = 0;
 ////        gbc.gridy = row;
 ////        add(from2to3SelfChanceLabel, gbc);
-////        from2to3SelfChance = new JTextField(Main.settings.from2to3SelfChance + "", 10);
+////        from2to3SelfChance = new JTextField(context.settings.from2to3SelfChance + "", 10);
 ////        gbc.gridx = 1;
 ////        gbc.gridy = row;
 ////        add(from2to3SelfChance, gbc);
@@ -199,7 +199,7 @@
 ////        gbc.gridx = 0;
 ////        gbc.gridy = row;
 ////        add(from3to4SelfChanceLabel, gbc);
-////        from3to4SelfChance = new JTextField(Main.settings.from3to4SelfChance + "", 10);
+////        from3to4SelfChance = new JTextField(context.settings.from3to4SelfChance + "", 10);
 ////        gbc.gridx = 1;
 ////        gbc.gridy = row;
 ////        add(from3to4SelfChance, gbc);
@@ -210,7 +210,7 @@
 ////        gbc.gridx = 0;
 ////        gbc.gridy = row;
 ////        add(from4to3SelfChanceLabel, gbc);
-////        from4to3SelfChance = new JTextField(Main.settings.from4to3SelfChance + "", 10);
+////        from4to3SelfChance = new JTextField(context.settings.from4to3SelfChance + "", 10);
 ////        gbc.gridx = 1;
 ////        gbc.gridy = row;
 ////        add(from4to3SelfChance, gbc);
@@ -221,7 +221,7 @@
 ////        gbc.gridy = row;
 ////        gbc.insets = new Insets(12, 0, 0, 0);
 ////        add(buffFromNegativeNeighbourLabel, gbc);
-////        buffFromNegativeNeighbour = new JTextField(Main.settings.buffFromNegativeNeighbour + "", 10);
+////        buffFromNegativeNeighbour = new JTextField(context.settings.buffFromNegativeNeighbour + "", 10);
 ////        gbc.gridx = 1;
 ////        gbc.gridy = row;
 ////        add(buffFromNegativeNeighbour, gbc);
@@ -232,7 +232,7 @@
 ////        gbc.gridx = 0;
 ////        gbc.gridy = row;
 ////        add(buffFromPositiveNeighbourLabel, gbc);
-////        buffFromPositiveNeighbour = new JTextField(Main.settings.buffFromPositiveNeighbour + "", 10);
+////        buffFromPositiveNeighbour = new JTextField(context.settings.buffFromPositiveNeighbour + "", 10);
 ////        gbc.gridx = 1;
 ////        gbc.gridy = row;
 ////        add(buffFromPositiveNeighbour, gbc);
@@ -242,7 +242,7 @@
 ////        gbc.gridx = 0;
 ////        gbc.gridy = row;
 ////        add(buffFromNewNeighbourLabel, gbc);
-////        buffFromNewNeighbour = new JTextField(Main.settings.buffFromNewNeighbour + "", 10);
+////        buffFromNewNeighbour = new JTextField(context.settings.buffFromNewNeighbour + "", 10);
 ////        gbc.gridx = 1;
 ////        gbc.gridy = row;
 ////        add(buffFromNewNeighbour, gbc);
@@ -269,30 +269,30 @@
 ////            public void actionPerformed(ActionEvent e) {
 ////
 ////
-////                Main.settings.isChangingMind = isChangingMind.isSelected();
-////                Main.settings.from1to2LowerTreshold = Integer.parseInt(from1to2LowerTreshold.getText());
-////                Main.settings.from2to3LowerTreshold = Integer.parseInt(from2to3LowerTreshold.getText());
-////                Main.settings.from3to4LowerTreshold = Integer.parseInt(from3to4LowerTreshold.getText());
-////                Main.settings.from1to2UpperTreshold = Integer.parseInt(from1to2UpperTreshold.getText());
-////                Main.settings.from2to3UpperTreshold = Integer.parseInt(from2to3UpperTreshold.getText());
-////                Main.settings.from3to4UpperTreshold = Integer.parseInt(from3to4UpperTreshold.getText());
-////                Main.settings.from4to3LowerTreshold = Integer.parseInt(from4to3LowerTreshold.getText());
-////                Main.settings.from4to3UpperTreshold = Integer.parseInt(from4to3UpperTreshold.getText());
-////                Main.settings.fieldWidth = Integer.parseInt(fieldWidth.getText());
-////                Main.settings.fieldHeight = Integer.parseInt(fieldHeight.getText());
-////                Main.settings.from1to2SelfChance = Integer.parseInt(from1to2SelfChance.getText());
-////                Main.settings.from2to3SelfChance = Integer.parseInt(from2to3SelfChance.getText());
-////                Main.settings.from3to4SelfChance = Integer.parseInt(from3to4SelfChance.getText());
-////                Main.settings.from4to3SelfChance = Integer.parseInt(from4to3SelfChance.getText());
-////                Main.settings.buffFromNegativeNeighbour = Integer.parseInt(buffFromNegativeNeighbour.getText());
-////                Main.settings.buffFromPositiveNeighbour = Integer.parseInt(buffFromPositiveNeighbour.getText());
-////                Main.settings.buffFromNewNeighbour = Integer.parseInt(buffFromNewNeighbour.getText());
+////                context.settings.isChangingMind = isChangingMind.isSelected();
+////                context.settings.from1to2LowerTreshold = Integer.parseInt(from1to2LowerTreshold.getText());
+////                context.settings.from2to3LowerTreshold = Integer.parseInt(from2to3LowerTreshold.getText());
+////                context.settings.from3to4LowerTreshold = Integer.parseInt(from3to4LowerTreshold.getText());
+////                context.settings.from1to2UpperTreshold = Integer.parseInt(from1to2UpperTreshold.getText());
+////                context.settings.from2to3UpperTreshold = Integer.parseInt(from2to3UpperTreshold.getText());
+////                context.settings.from3to4UpperTreshold = Integer.parseInt(from3to4UpperTreshold.getText());
+////                context.settings.from4to3LowerTreshold = Integer.parseInt(from4to3LowerTreshold.getText());
+////                context.settings.from4to3UpperTreshold = Integer.parseInt(from4to3UpperTreshold.getText());
+////                context.settings.fieldWidth = Integer.parseInt(fieldWidth.getText());
+////                context.settings.fieldHeight = Integer.parseInt(fieldHeight.getText());
+////                context.settings.from1to2SelfChance = Integer.parseInt(from1to2SelfChance.getText());
+////                context.settings.from2to3SelfChance = Integer.parseInt(from2to3SelfChance.getText());
+////                context.settings.from3to4SelfChance = Integer.parseInt(from3to4SelfChance.getText());
+////                context.settings.from4to3SelfChance = Integer.parseInt(from4to3SelfChance.getText());
+////                context.settings.buffFromNegativeNeighbour = Integer.parseInt(buffFromNegativeNeighbour.getText());
+////                context.settings.buffFromPositiveNeighbour = Integer.parseInt(buffFromPositiveNeighbour.getText());
+////                context.settings.buffFromNewNeighbour = Integer.parseInt(buffFromNewNeighbour.getText());
 ////
 ////                Settings.saveSettings();
-////                Main.settingsFrame.setVisible(false);
-////                System.out.println(Main.settings.fieldWidth + ";" + Main.settings.fieldHeight);
+////                context.settingsFrame.setVisible(false);
+////                System.out.println(context.settings.fieldWidth + ";" + context.settings.fieldHeight);
 ////                //Продолжить выполнение в программе                                                                     ПЕРЕХОД КО ВТОРОМУ ОКНУ
-////                Main.simulationFrame.setVisible(true);
+////                context.simulationFrame.setVisible(true);
 ////
 ////
 ////            }
@@ -337,7 +337,7 @@
 //        FileInputStream fis = new FileInputStream(settingsFile);
 //
 //        ObjectInputStream oin = new ObjectInputStream(fis);
-//        Main.settings = (Settings) oin.readObject();
+//        context.settings = (Settings) oin.readObject();
 //
 //        int row = 0;
 //
@@ -361,7 +361,7 @@
 //        gbc.gridx = 0;
 //        gbc.gridy = row;
 //        frame.add(fieldWidthLabel, gbc);
-//        fieldWidth = new JTextField((Main.settings.fieldWidth + ""), 10);
+//        fieldWidth = new JTextField((context.settings.fieldWidth + ""), 10);
 //        gbc.gridx = 1;
 //        gbc.gridy = row;
 //        frame.add(fieldWidth, gbc);
@@ -372,7 +372,7 @@
 //        gbc.gridy = row;
 //        gbc.insets = new Insets(0, 0, 8, 0);
 //        frame.add(fieldHeightLabel, gbc);
-//        fieldHeight = new JTextField(Main.settings.fieldHeight + "", 10);
+//        fieldHeight = new JTextField(context.settings.fieldHeight + "", 10);
 //        gbc.gridx = 1;
 //        gbc.gridy = row;
 //        frame.add(fieldHeight, gbc);
@@ -383,7 +383,7 @@
 //        gbc.gridx = 0;
 //        gbc.gridy = row;
 //        frame.add(from1to2LowerTresholdLabel, gbc);
-//        from1to2LowerTreshold = new JTextField(Main.settings.from1to2LowerTreshold + "", 10);
+//        from1to2LowerTreshold = new JTextField(context.settings.from1to2LowerTreshold + "", 10);
 //        gbc.gridx = 1;
 //        gbc.gridy = row;
 //        frame.add(from1to2LowerTreshold, gbc);
@@ -394,7 +394,7 @@
 //        gbc.gridx = 0;
 //        gbc.gridy = row;
 //        frame.add(from1to2UpperTresholdLabel, gbc);
-//        from1to2UpperTreshold = new JTextField(Main.settings.from1to2UpperTreshold + "", 10);
+//        from1to2UpperTreshold = new JTextField(context.settings.from1to2UpperTreshold + "", 10);
 //        gbc.gridx = 1;
 //        gbc.gridy = row;
 //        frame.add(from1to2UpperTreshold, gbc);
@@ -407,7 +407,7 @@
 //        gbc.gridx = 0;
 //        gbc.gridy = row;
 //        frame.add(from2to3LowerTresholdLabel, gbc);
-//        from2to3LowerTreshold = new JTextField(Main.settings.from2to3LowerTreshold + "", 10);
+//        from2to3LowerTreshold = new JTextField(context.settings.from2to3LowerTreshold + "", 10);
 //        gbc.gridx = 1;
 //        gbc.gridy = row;
 //        frame.add(from2to3LowerTreshold, gbc);
@@ -417,7 +417,7 @@
 //        gbc.gridx = 0;
 //        gbc.gridy = row;
 //        frame.add(from2to3UpperTresholdLabel, gbc);
-//        from2to3UpperTreshold = new JTextField(Main.settings.from2to3UpperTreshold + "", 10);
+//        from2to3UpperTreshold = new JTextField(context.settings.from2to3UpperTreshold + "", 10);
 //        gbc.gridx = 1;
 //        gbc.gridy = row;
 //        frame.add(from2to3UpperTreshold, gbc);
@@ -428,7 +428,7 @@
 //        gbc.gridx = 0;
 //        gbc.gridy = row;
 //        frame.add(from3to4LowerTresholdLabel, gbc);
-//        from3to4LowerTreshold = new JTextField(Main.settings.from3to4LowerTreshold + "", 10);
+//        from3to4LowerTreshold = new JTextField(context.settings.from3to4LowerTreshold + "", 10);
 //        gbc.gridx = 1;
 //        gbc.gridy = row;
 //        frame.add(from3to4LowerTreshold, gbc);
@@ -438,7 +438,7 @@
 //        gbc.gridx = 0;
 //        gbc.gridy = row;
 //        frame.add(from3to4UpperTresholdLabel, gbc);
-//        from3to4UpperTreshold = new JTextField(Main.settings.from3to4UpperTreshold + "", 10);
+//        from3to4UpperTreshold = new JTextField(context.settings.from3to4UpperTreshold + "", 10);
 //        gbc.gridx = 1;
 //        gbc.gridy = row;
 //        frame.add(from3to4UpperTreshold, gbc);
@@ -449,7 +449,7 @@
 //        gbc.gridx = 0;
 //        gbc.gridy = row;
 //        frame.add(from4to3LowerTresholdLabel, gbc);
-//        from4to3LowerTreshold = new JTextField(Main.settings.from4to3LowerTreshold + "", 10);
+//        from4to3LowerTreshold = new JTextField(context.settings.from4to3LowerTreshold + "", 10);
 //        gbc.gridx = 1;
 //        gbc.gridy = row;
 //        frame.add(from4to3LowerTreshold, gbc);
@@ -459,7 +459,7 @@
 //        gbc.gridx = 0;
 //        gbc.gridy = row;
 //        frame.add(from4to3UpperTresholdLabel, gbc);
-//        from4to3UpperTreshold = new JTextField(Main.settings.from4to3UpperTreshold + "", 10);
+//        from4to3UpperTreshold = new JTextField(context.settings.from4to3UpperTreshold + "", 10);
 //        gbc.gridx = 1;
 //        gbc.gridy = row;
 //        frame.add(from4to3UpperTreshold, gbc);
@@ -471,7 +471,7 @@
 //        gbc.gridx = 0;
 //        gbc.gridy = row;
 //        frame.add(from1to2SelfChanceLabel, gbc);
-//        from1to2SelfChance = new JTextField(Main.settings.from1to2SelfChance + "", 10);
+//        from1to2SelfChance = new JTextField(context.settings.from1to2SelfChance + "", 10);
 //        gbc.gridx = 1;
 //        gbc.gridy = row;
 //        frame.add(from1to2SelfChance, gbc);
@@ -482,7 +482,7 @@
 //        gbc.gridx = 0;
 //        gbc.gridy = row;
 //        frame.add(from2to3SelfChanceLabel, gbc);
-//        from2to3SelfChance = new JTextField(Main.settings.from2to3SelfChance + "", 10);
+//        from2to3SelfChance = new JTextField(context.settings.from2to3SelfChance + "", 10);
 //        gbc.gridx = 1;
 //        gbc.gridy = row;
 //        frame.add(from2to3SelfChance, gbc);
@@ -493,7 +493,7 @@
 //        gbc.gridx = 0;
 //        gbc.gridy = row;
 //        frame.add(from3to4SelfChanceLabel, gbc);
-//        from3to4SelfChance = new JTextField(Main.settings.from3to4SelfChance + "", 10);
+//        from3to4SelfChance = new JTextField(context.settings.from3to4SelfChance + "", 10);
 //        gbc.gridx = 1;
 //        gbc.gridy = row;
 //        frame.add(from3to4SelfChance, gbc);
@@ -504,7 +504,7 @@
 //        gbc.gridx = 0;
 //        gbc.gridy = row;
 //        frame.add(from4to3SelfChanceLabel, gbc);
-//        from4to3SelfChance = new JTextField(Main.settings.from4to3SelfChance + "", 10);
+//        from4to3SelfChance = new JTextField(context.settings.from4to3SelfChance + "", 10);
 //        gbc.gridx = 1;
 //        gbc.gridy = row;
 //        frame.add(from4to3SelfChance, gbc);
@@ -515,7 +515,7 @@
 //        gbc.gridy = row;
 //        gbc.insets = new Insets(12, 0, 0, 0);
 //        frame.add(buffFromNegativeNeighbourLabel, gbc);
-//        buffFromNegativeNeighbour = new JTextField(Main.settings.buffFromNegativeNeighbour + "", 10);
+//        buffFromNegativeNeighbour = new JTextField(context.settings.buffFromNegativeNeighbour + "", 10);
 //        gbc.gridx = 1;
 //        gbc.gridy = row;
 //        frame.add(buffFromNegativeNeighbour, gbc);
@@ -526,7 +526,7 @@
 //        gbc.gridx = 0;
 //        gbc.gridy = row;
 //        frame.add(buffFromPositiveNeighbourLabel, gbc);
-//        buffFromPositiveNeighbour = new JTextField(Main.settings.buffFromPositiveNeighbour + "", 10);
+//        buffFromPositiveNeighbour = new JTextField(context.settings.buffFromPositiveNeighbour + "", 10);
 //        gbc.gridx = 1;
 //        gbc.gridy = row;
 //        frame.add(buffFromPositiveNeighbour, gbc);
@@ -536,7 +536,7 @@
 //        gbc.gridx = 0;
 //        gbc.gridy = row;
 //        frame.add(buffFromNewNeighbourLabel, gbc);
-//        buffFromNewNeighbour = new JTextField(Main.settings.buffFromNewNeighbour + "", 10);
+//        buffFromNewNeighbour = new JTextField(context.settings.buffFromNewNeighbour + "", 10);
 //        gbc.gridx = 1;
 //        gbc.gridy = row;
 //        frame.add(buffFromNewNeighbour, gbc);
@@ -563,26 +563,26 @@
 //            public void actionPerformed(ActionEvent e) {
 //
 //
-//                Main.settings.isChangingMind = isChangingMind.isSelected();
-//                Main.settings.from1to2LowerTreshold = Integer.parseInt(from1to2LowerTreshold.getText());
-//                Main.settings.from2to3LowerTreshold = Integer.parseInt(from2to3LowerTreshold.getText());
-//                Main.settings.from3to4LowerTreshold = Integer.parseInt(from3to4LowerTreshold.getText());
-//                Main.settings.from1to2UpperTreshold = Integer.parseInt(from1to2UpperTreshold.getText());
-//                Main.settings.from2to3UpperTreshold = Integer.parseInt(from2to3UpperTreshold.getText());
-//                Main.settings.from3to4UpperTreshold = Integer.parseInt(from3to4UpperTreshold.getText());
-//                Main.settings.from4to3LowerTreshold = Integer.parseInt(from4to3LowerTreshold.getText());
-//                Main.settings.from4to3UpperTreshold = Integer.parseInt(from4to3UpperTreshold.getText());
-//                Main.settings.fieldWidth = Integer.parseInt(fieldWidth.getText());
-//                Main.settings.fieldHeight = Integer.parseInt(fieldHeight.getText());
-//                Main.settings.from1to2SelfChance = Integer.parseInt(from1to2SelfChance.getText());
-//                Main.settings.from2to3SelfChance = Integer.parseInt(from2to3SelfChance.getText());
-//                Main.settings.from3to4SelfChance = Integer.parseInt(from3to4SelfChance.getText());
-//                Main.settings.from4to3SelfChance = Integer.parseInt(from4to3SelfChance.getText());
-//                Main.settings.buffFromNegativeNeighbour = Integer.parseInt(buffFromNegativeNeighbour.getText());
-//                Main.settings.buffFromPositiveNeighbour = Integer.parseInt(buffFromPositiveNeighbour.getText());
-//                Main.settings.buffFromNewNeighbour = Integer.parseInt(buffFromNewNeighbour.getText());
+//                context.settings.isChangingMind = isChangingMind.isSelected();
+//                context.settings.from1to2LowerTreshold = Integer.parseInt(from1to2LowerTreshold.getText());
+//                context.settings.from2to3LowerTreshold = Integer.parseInt(from2to3LowerTreshold.getText());
+//                context.settings.from3to4LowerTreshold = Integer.parseInt(from3to4LowerTreshold.getText());
+//                context.settings.from1to2UpperTreshold = Integer.parseInt(from1to2UpperTreshold.getText());
+//                context.settings.from2to3UpperTreshold = Integer.parseInt(from2to3UpperTreshold.getText());
+//                context.settings.from3to4UpperTreshold = Integer.parseInt(from3to4UpperTreshold.getText());
+//                context.settings.from4to3LowerTreshold = Integer.parseInt(from4to3LowerTreshold.getText());
+//                context.settings.from4to3UpperTreshold = Integer.parseInt(from4to3UpperTreshold.getText());
+//                context.settings.fieldWidth = Integer.parseInt(fieldWidth.getText());
+//                context.settings.fieldHeight = Integer.parseInt(fieldHeight.getText());
+//                context.settings.from1to2SelfChance = Integer.parseInt(from1to2SelfChance.getText());
+//                context.settings.from2to3SelfChance = Integer.parseInt(from2to3SelfChance.getText());
+//                context.settings.from3to4SelfChance = Integer.parseInt(from3to4SelfChance.getText());
+//                context.settings.from4to3SelfChance = Integer.parseInt(from4to3SelfChance.getText());
+//                context.settings.buffFromNegativeNeighbour = Integer.parseInt(buffFromNegativeNeighbour.getText());
+//                context.settings.buffFromPositiveNeighbour = Integer.parseInt(buffFromPositiveNeighbour.getText());
+//                context.settings.buffFromNewNeighbour = Integer.parseInt(buffFromNewNeighbour.getText());
 //                Settings.saveSettings();
-//                Main.settingsFrame.setVisible(false);
+//                context.settingsFrame.setVisible(false);
 //                //Продолжить выполнение в программе             ПЕРЕХОД КО ВТОРОМУ ОКНУ
 //                Field.field = Field.initializeBlack();
 //                initSimulationFrame();
@@ -624,14 +624,14 @@
 //        cellField.addActionListener(new ActionListener() {
 //            @Override
 //            public void actionPerformed(ActionEvent e) {
-//                Main.renderingField= 1;
+//                context.renderingField= 1;
 //            }
 //        });
 //        supercellField = new JButton("supercell layer");
 //        supercellField.addActionListener(new ActionListener() {
 //            @Override
 //            public void actionPerformed(ActionEvent e) {
-//                Main.renderingField = 2;
+//                context.renderingField = 2;
 //            }
 //        });
 //        diameter = new JSlider(JSlider.HORIZONTAL, 1, 500, 1);
@@ -641,15 +641,15 @@
 //        diameter.addChangeListener(new ChangeListener() {
 //            @Override
 //            public void stateChanged(ChangeEvent e) {
-//                Main.areaEffectDiameter = diameter.getValue();
-//                diameterText.setText("Area of supercells: "+Main.areaEffectDiameter);
+//                context.areaEffectDiameter = diameter.getValue();
+//                diameterText.setText("Area of supercells: "+context.areaEffectDiameter);
 //            }
 //        });
 //        red.setPreferredSize(new Dimension(70, 20));
 //        red.addActionListener(new ActionListener() {
 //            @Override
 //            public void actionPerformed(ActionEvent e) {
-//                Main.color = Color.red;
+//                context.color = Color.red;
 //                colorText.setText("Current: red");
 //                indicator.setBackground(Color.RED);
 //            }
@@ -658,7 +658,7 @@
 //        black.addActionListener(new ActionListener() {
 //            @Override
 //            public void actionPerformed(ActionEvent e) {
-//                Main.color = Color.black;
+//                context.color = Color.black;
 //                colorText.setText("Current: black");
 //                indicator.setBackground(Color.BLACK);
 //            }
@@ -667,7 +667,7 @@
 //        blue.addActionListener(new ActionListener() {
 //            @Override
 //            public void actionPerformed(ActionEvent e) {
-//                Main.color = Color.blue;
+//                context.color = Color.blue;
 //                colorText.setText("Current: blue");
 //                indicator.setBackground(Color.BLUE);
 //            }
@@ -676,7 +676,7 @@
 //        green.addActionListener(new ActionListener() {
 //            @Override
 //            public void actionPerformed(ActionEvent e) {
-//                Main.color = Color.green;
+//                context.color = Color.green;
 //                colorText.setText("Current: green");
 //                indicator.setBackground(Color.GREEN);
 //            }
@@ -715,13 +715,13 @@
 //        layerButton.addActionListener(new ActionListener() {
 //            @Override
 //            public void actionPerformed(ActionEvent e) {
-//                if (Main.renderingField ==1){
-//                    Main.renderingField =2;
+//                if (context.renderingField ==1){
+//                    context.renderingField =2;
 //                    layerButton.setText("Supercells");
 //
 //                }                                       // ЗАМЕНИТЬ НА TRUE FALSE
-//                else if (Main.renderingField==2){
-//                    Main.renderingField=1;
+//                else if (context.renderingField==2){
+//                    context.renderingField=1;
 //                    layerButton.setText("Cells");
 //                }
 //            }
@@ -762,7 +762,7 @@
 //        Keyboard.create(c);
 //
 //        frame.setVisible(true);
-//        Main.simulationFrame = frame;
+//        context.simulationFrame = frame;
 //
 //    }
 //    public static void render() {
@@ -772,10 +772,10 @@
 //        Graphics2D graph = (Graphics2D) buffer.getDrawGraphics();
 //        graph.setColor(Color.blue);
 //
-//            if (Main.renderingField == 1) {
+//            if (context.renderingField == 1) {
 //                renderCells(Field.field);
 //            }
-//            if (Main.renderingField == 2) {
+//            if (context.renderingField == 2) {
 //                //render 2 sloi
 //            }
 //
@@ -785,27 +785,27 @@
 //    public static void renderCells(CellInterface _field[][]) {            //метод, отрисовывающий все клетки на обычном поле
 //        BufferStrategy buffer = c.getBufferStrategy();
 //        Graphics2D graph = (Graphics2D) buffer.getDrawGraphics();
-//        if (Main.renderingField == 1) {  //рисовать поле клеток
-//            for (int height = 0; height < Main.settings.fieldHeight; height++) {
-//                for (int width = 0; width < Main.settings.fieldHeight; width++) {
+//        if (context.renderingField == 1) {  //рисовать поле клеток
+//            for (int height = 0; height < context.settings.fieldHeight; height++) {
+//                for (int width = 0; width < context.settings.fieldHeight; width++) {
 //                    //0-не пользовавшийся, 1- новый , 2 -удаливший, 3- пользующийся повторноновый
 //
 //                    switch (_field[height][width].getType()) {
 //                        case 0:
 //                            graph.setColor(Color.BLACK);
-//                            graph.fillRect(width * (600 / Main.settings.fieldWidth), height * (600 / Main.settings.fieldHeight), (600 / Main.settings.fieldWidth), (600 / Main.settings.fieldHeight));
+//                            graph.fillRect(width * (600 / context.settings.fieldWidth), height * (600 / context.settings.fieldHeight), (600 / context.settings.fieldWidth), (600 / context.settings.fieldHeight));
 //                            break;
 //                        case 1:
 //                            graph.setColor(Color.BLUE);
-//                            graph.fillRect(width * (600 / Main.settings.fieldWidth), height * (600 / Main.settings.fieldHeight), (600 / Main.settings.fieldWidth), (600 / Main.settings.fieldHeight));
+//                            graph.fillRect(width * (600 / context.settings.fieldWidth), height * (600 / context.settings.fieldHeight), (600 / context.settings.fieldWidth), (600 / context.settings.fieldHeight));
 //                            break;
 //                        case 2:
 //                            graph.setColor(Color.RED);
-//                            graph.fillRect(width * (600 / Main.settings.fieldWidth), height * (600 / Main.settings.fieldHeight), (600 / Main.settings.fieldWidth), (600 / Main.settings.fieldHeight));
+//                            graph.fillRect(width * (600 / context.settings.fieldWidth), height * (600 / context.settings.fieldHeight), (600 / context.settings.fieldWidth), (600 / context.settings.fieldHeight));
 //                            break;
 //                        case 3:
 //                            graph.setColor(Color.GREEN);
-//                            graph.fillRect(width * (600 / Main.settings.fieldWidth), height * (600 / Main.settings.fieldHeight), (600 / Main.settings.fieldWidth), (600 / Main.settings.fieldHeight));
+//                            graph.fillRect(width * (600 / context.settings.fieldWidth), height * (600 / context.settings.fieldHeight), (600 / context.settings.fieldWidth), (600 / context.settings.fieldHeight));
 //                            break;
 //                    }
 //                }

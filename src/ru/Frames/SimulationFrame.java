@@ -1,5 +1,6 @@
 package ru.Frames;
 
+import ru.AppContext;
 import ru.Keyboard;
 import ru.Main;
 import ru.Mouse;
@@ -13,7 +14,7 @@ import java.awt.event.ActionListener;
 
 public class SimulationFrame extends JFrame {
     public Canvas c;
-
+    public AppContext context;
 
 
     public SimulationFrame(){
@@ -37,14 +38,14 @@ public class SimulationFrame extends JFrame {
         cellField.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Main.renderingField= 1;
+                context.renderingField= 1;
             }
         });
         supercellField = new JButton("supercell layer");
         supercellField.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Main.renderingField = 2;
+                context.renderingField = 2;
             }
         });
         diameter = new JSlider(JSlider.HORIZONTAL, 1, 500, 1);
@@ -54,15 +55,15 @@ public class SimulationFrame extends JFrame {
         diameter.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
-                Main.areaEffectDiameter = diameter.getValue();
-                diameterText.setText("Area of supercells: "+Main.areaEffectDiameter);
+                context.areaEffectDiameter = diameter.getValue();
+                diameterText.setText("Area of supercells: "+context.areaEffectDiameter);
             }
         });
         red.setPreferredSize(new Dimension(70, 20));
         red.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Main.color = Color.red;
+                context.color = Color.red;
                 colorText.setText("Current: red");
                 indicator.setBackground(Color.RED);
             }
@@ -71,7 +72,7 @@ public class SimulationFrame extends JFrame {
         black.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Main.color = Color.black;
+                context.color = Color.black;
                 colorText.setText("Current: black");
                 indicator.setBackground(Color.BLACK);
             }
@@ -80,7 +81,7 @@ public class SimulationFrame extends JFrame {
         blue.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Main.color = Color.blue;
+                context.color = Color.blue;
                 colorText.setText("Current: blue");
                 indicator.setBackground(Color.BLUE);
             }
@@ -89,7 +90,7 @@ public class SimulationFrame extends JFrame {
         green.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Main.color = Color.green;
+                context.color = Color.green;
                 colorText.setText("Current: green");
                 indicator.setBackground(Color.GREEN);
             }
@@ -128,13 +129,13 @@ public class SimulationFrame extends JFrame {
         layerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (Main.renderingField ==1){
-                    Main.renderingField =2;
+                if (context.renderingField ==1){
+                    context.renderingField =2;
                     layerButton.setText("Supercells");
 
                 }                                       // ЗАМЕНИТЬ НА TRUE FALSE
-                else if (Main.renderingField==2){
-                    Main.renderingField=1;
+                else if (context.renderingField==2){
+                    context.renderingField=1;
                     layerButton.setText("Cells");
                 }
             }
@@ -163,7 +164,7 @@ public class SimulationFrame extends JFrame {
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Main.processing = true;
+                context.processing = true;
 
             }
         });
@@ -175,11 +176,11 @@ public class SimulationFrame extends JFrame {
         closeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Main.processing = false;
+                context.processing = false;
                 try{
-                    Main.manager.writeToFileSimulated("plotSimulated1.csv",1, false);
-//                    Main.manager.writeToFileBass("C:\\Users\\техносила\\Google Диск\\Java Projects\\Текущие\\Graph\\out\\plotBass.csv");
-//                    Main.manager.writeBothToFile("C:\\Users\\техносила\\Google Диск\\Java Projects\\Текущие\\Graph\\out\\bothPlots.csv");
+                    context.graphicsOutputManager.writeToFileSimulated("plotSimulated1.csv",1, false);
+//                    context.manager.writeToFileBass("C:\\Users\\техносила\\Google Диск\\Java Projects\\Текущие\\Graph\\out\\plotBass.csv");
+//                    context.manager.writeBothToFile("C:\\Users\\техносила\\Google Диск\\Java Projects\\Текущие\\Graph\\out\\bothPlots.csv");
                 }catch (Exception ex){
                     ex.printStackTrace();
                 }

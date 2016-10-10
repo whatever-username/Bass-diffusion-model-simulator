@@ -6,7 +6,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 public class Mouse implements MouseListener, MouseMotionListener {
-
+	public static AppContext context;
 	private static int x;
 	private static int y;
 	private static volatile boolean[] buttonsDown = new boolean[256];
@@ -26,11 +26,11 @@ public class Mouse implements MouseListener, MouseMotionListener {
 	}
 
 	public static int getCellX() {
-		return x / (600/Main.settings.fieldWidth);
+		return x / (600/context.settings.fieldWidth);
 	}
 
 	public static int getCellY() {
-		return y / (600/Main.settings.fieldHeight);
+		return y / (600/context.settings.fieldHeight);
 	}
 
 	public static boolean isButtonDown(int buttonCode) {

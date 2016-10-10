@@ -11,37 +11,13 @@ import java.io.*;
  * Created by техносила on 09.09.2016.
  */
 public class Main {
-    public static int renderingField=1; //номер поля, отображаемого в тек. момент
-    public static int areaEffectDiameter = 0; // радиус воздействия точки-маяка
-    public static Color color;
-    public static boolean ready=false;
-    public static Settings settings;
-    public static FieldManager fieldManager;
-    public static boolean processing = false;
-    public static Cell field[][];
-    public static Cell bufferField[][];
-    public static GraphicsOutputManager manager;
+
     public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
-        manager = new GraphicsOutputManager();
-        Thread thread = new Thread(new InitThread());
-        thread.start();
-        thread.join();
-        FieldManager.initializeBlack();
-        while (true){
-            if (FramesManager.simulationFrame!=null){
-                FramesManager.render();
-                if (!processing){
-                    FieldManager.update(field);
-                }
-                else {
-                    FieldManager.test();
 
+        AppContext context = new AppContext();
 
-                }
-            }else {
-                Thread.sleep(10);
-            }
-        }
+        context.framesManager.initializeFrames();
+
 
     }
 }
