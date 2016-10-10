@@ -17,11 +17,15 @@ public class FramesManager {
     public AppContext context;
     public SettingsFrame settingsFrame;
     public SimulationFrame simulationFrame;
-    public void initializeFrames() throws IOException, ClassNotFoundException, InterruptedException {
-        FramesInitializer framesInitializer = new FramesInitializer("settings");
-        Thread thread = new Thread(framesInitializer);
+    public void initializeFrames(String settingsOutput) throws IOException, ClassNotFoundException, InterruptedException {
         settingsFrame = new SettingsFrame(context);
-
+        simulationFrame = new SimulationFrame(context);
+        FramesInitializer framesInitializer = new FramesInitializer("settings", settingsOutput);
+        Thread thread = new Thread(framesInitializer);
+        thread.start(); //поток, в котором создается окно с параметрами
+        thread.join();  //выход из этого потока и продолжение main после нажатия клавиши
+        framesInitializer.frame="simulation";
+        thread = new Thread(framesInitializer);
         thread.start();
         thread.join();
 
@@ -32,16 +36,18 @@ public class FramesManager {
     }
     public class FramesInitializer implements Runnable {
         String frame;
-        public FramesInitializer(String frame){
+        String settingsOutput;
+        public FramesInitializer(String frame, String settingsOutput){
             this.frame=frame;
+            this.settingsOutput = settingsOutput;
         }
         @Override
         public void run() {
             switch (frame){
                 case "settings":
-                    System.out.println("начало");
+                    System.out.println("запущено окно настроек");
                     try {
-                        settingsFrame.init();
+                        settingsFrame.init(settingsOutput);
                     }catch (Exception e){
 
                         e.printStackTrace();
@@ -50,6 +56,12 @@ public class FramesManager {
 
                     break;
                 case "simulation":
+                    try{
+                        System.out.println("запущено окно симуляции");
+                        simulationFrame.init();
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
                     break;
                 default:
                     throw new RuntimeException("wrong frame");

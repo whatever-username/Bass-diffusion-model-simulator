@@ -16,10 +16,10 @@ public class Settings implements Serializable{
     public double from1to2SelfChance,from2to3SelfChance,from3to4SelfChance,from4to3SelfChance,
             buffFromPositiveNeighbour,buffFromNegativeNeighbour,buffFromNewNeighbour;
     public boolean isChangingMind;
-    public void saveSettings() {
+    public void saveSettings(String name) {
         FileOutputStream fos = null;
         try {
-            fos = new FileOutputStream("settings.out");
+            fos = new FileOutputStream(name);
         } catch (FileNotFoundException e1) {
             e1.printStackTrace();
         }
@@ -81,5 +81,14 @@ public class Settings implements Serializable{
             e1.printStackTrace();
         }
 
+    }
+    public static Settings loadSettings(String file) throws IOException, ClassNotFoundException {
+        File settingsFile = new File(file);
+
+        FileInputStream fis = new FileInputStream(settingsFile);
+
+        ObjectInputStream oin = new ObjectInputStream(fis);
+        Settings settings = (Settings) oin.readObject();
+        return settings;
     }
 }

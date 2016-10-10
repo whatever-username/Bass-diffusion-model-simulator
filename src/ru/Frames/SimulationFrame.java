@@ -15,14 +15,17 @@ import java.awt.event.ActionListener;
 public class SimulationFrame extends JFrame {
     public Canvas c;
     public AppContext context;
+    JButton black, blue, red, green, cellField, supercellField;
+    JPanel colorButtons, layerButtons, commandPanel;
+    JSlider diameter;
+    JLabel diameterText, radiusText;
+    GridBagConstraints gbc = new GridBagConstraints();
 
+    public SimulationFrame(AppContext context){
+        this.context = context;
 
-    public SimulationFrame(){
-        JButton black, blue, red, green, cellField, supercellField;
-        JPanel colorButtons, layerButtons, commandPanel;
-        JSlider diameter;
-        JLabel diameterText, radiusText;
-        GridBagConstraints gbc = new GridBagConstraints();
+    }
+    public void init(){
         setLayout(new GridBagLayout());
         red = new JButton("red");
         black = new JButton("black");
@@ -192,7 +195,7 @@ public class SimulationFrame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(null);
-        setVisible(false);
+        setVisible(true);
         c.createBufferStrategy(2);    // ex. NUM_BUFFERS
         Mouse.create(c);
         Keyboard.create(c);

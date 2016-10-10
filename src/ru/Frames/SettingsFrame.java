@@ -39,8 +39,8 @@ public class SettingsFrame extends JFrame {
         this.context =  context;
 
     }
-    public void init() throws IOException, ClassNotFoundException, InterruptedException{
-        String[] ways = {"Fill in randomly", "Blank field", "DNR Edition"};     //е используется
+    public void init(String settingsInput) throws IOException, ClassNotFoundException, InterruptedException{
+        String[] ways = {"Fill in randomly", "Blank field", "DNR Edition"};     //не используется
         GridBagConstraints gbc = new GridBagConstraints();
         setName("Model");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -49,10 +49,8 @@ public class SettingsFrame extends JFrame {
         if (settingsFile.exists()!=true){
             context.settings.createSettings();
         }
-        FileInputStream fis = new FileInputStream(settingsFile);
 
-        ObjectInputStream oin = new ObjectInputStream(fis);
-        context.settings = (Settings) oin.readObject();
+        context.settings = Settings.loadSettings(settingsInput);
 
         int row = 0;
 
@@ -297,8 +295,9 @@ public class SettingsFrame extends JFrame {
                 context.settings.buffFromPositiveNeighbour = Double.parseDouble(buffFromPositiveNeighbour.getText());
                 context.settings.buffFromNewNeighbour = Double.parseDouble(buffFromNewNeighbour.getText());
 
-                context.settings.saveSettings();
-                context.fieldManager.initializeBlack();
+                context.settings.saveSettings("settings.out");
+//                context.fieldManager.initializeBlack();
+                context.fieldManager.initializeRandom(90,5,2,3);
                 setVisible(false);
                 //Продолжить выполнение в программе             ПЕРЕХОД КО ВТОРОМУ ОКНУ
                 sleeping=false;
@@ -309,11 +308,12 @@ public class SettingsFrame extends JFrame {
         pack();
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         setLocation(screenSize.width / 2 - size().width / 2, screenSize.height / 2 - size().height / 2);
-
+        //Костыль
         setVisible(true);
         while (sleeping){
             Thread.sleep(10);
         }
+        //Костыль
     }
 
 

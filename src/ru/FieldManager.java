@@ -1,6 +1,8 @@
 package ru;
 
 import java.awt.*;
+import java.util.*;
+import java.util.List;
 
 /**
  * Created by техносила on 10.09.2016.
@@ -10,11 +12,20 @@ public class FieldManager {
      *  @see GraphicsOutputManager#addPoint(int)
      */
     int usersCount = 0;
+    int stage=0;
     /** Для расчета состояния одной клетки по её соседям */
     int positiveNeighboursAmount;
     int negativeNeighboursAmount;
     int newNeighboursAmount;
     public AppContext context;
+
+    public int getUsersCount() {
+        return usersCount;
+    }
+
+    public int getStage() {
+        return stage;
+    }
 
     public void initializeBlack() {
         context.field = new Cell[context.settings.fieldHeight][context.settings.fieldWidth];
@@ -24,6 +35,69 @@ public class FieldManager {
             }
         }
     }
+    public class CellColor{
+        String color;
+        public int percentage;
+        int number;
+        public CellColor(String color, int percentage, int number){
+            this.color = color;
+            this.percentage = percentage;
+            this.number=number;
+        }
+        public String toString(){
+            return (color+"; "+ percentage+"; "+number);
+        }
+
+        public int getPercentage() {
+            return percentage;
+        }
+    }
+    public void initializeRandom(int blackPercentage, int bluePercentage, int greenPercentage, int redPercentage){
+        stage=0;
+        if (blackPercentage+greenPercentage+bluePercentage+redPercentage > 100){
+            throw new RuntimeException("sum is > 100");
+        }
+        CellColor black = new CellColor("black",blackPercentage,0);
+        CellColor blue = new CellColor("blue",bluePercentage,1);
+        CellColor red = new CellColor("red",redPercentage,2);
+        CellColor green = new CellColor("green",greenPercentage,3);
+        List<CellColor> colors = new ArrayList<>();
+        colors.add(black);
+        colors.add(blue);
+        colors.add(green);
+        colors.add(red);
+        colors.sort(new Comparator<CellColor>() {
+            @Override
+            public int compare(CellColor o1, CellColor o2) {
+                if (o1.percentage<o2.percentage){
+                    return -1;
+                }
+                else if(o1.percentage>o2.percentage){
+                    return 1;
+                }else {
+                    return 0;
+                }
+            }
+        });
+        context.field = new Cell[context.settings.fieldHeight][context.settings.fieldWidth];
+        for (int height = 0; height < context.settings.fieldHeight; height++) {
+            for (int width = 0; width < context.settings.fieldWidth; width++) {
+                int chance = (int) (Math.random()*100);
+                if ((chance < colors.get(0).percentage) && (chance >= 0)) {
+                    context.field[height][width] = new Cell(colors.get(0).number);
+                }
+                else if ((chance>=colors.get(0).percentage)&&(chance<(colors.get(0).percentage+colors.get(1).percentage))){
+                    context.field[height][width] = new Cell(colors.get(1).number);
+                }
+                else if ((chance>=(colors.get(1).percentage+colors.get(0).percentage))&&(chance<(colors.get(0).percentage+colors.get(1).percentage+colors.get(2).percentage))){
+                    context.field[height][width] = new Cell(colors.get(2).number);
+                }else {
+                    context.field[height][width] = new Cell(colors.get(3).number);
+                }
+            }
+        }
+    }
+
 
     public void update(CellInterface field[][]) {
 
@@ -59,6 +133,8 @@ public class FieldManager {
      * <p>Расчитывает ситуацию на поле КО в следующем шаге</p>
      */
     public void calculate() {
+        usersCount=0;
+        stage++;
         context.bufferField = new Cell[context.settings.fieldHeight][context.settings.fieldWidth];
 
         for (int height = 0; height < context.settings.fieldHeight; height++) {

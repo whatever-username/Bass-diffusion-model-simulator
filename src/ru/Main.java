@@ -16,8 +16,24 @@ public class Main {
 
         AppContext context = new AppContext();
 
-        context.framesManager.initializeFrames();
 
+        /*context.framesManager.initializeFrames("testing730(onCondition).out");
+        while(true){
+            context.framesManager.render();
+            if (context.processing==false){
+                context.fieldManager.update(context.field);
+            }
+            else {
+                context.fieldManager.calculate();
+            }
+        }*/
+
+
+
+        NoVisual noVisual = new NoVisual(context);
+        context.settings = Settings.loadSettings("settings.out");//грузит базовые настройки
+
+        noVisual.calculate();
 
     }
 }
