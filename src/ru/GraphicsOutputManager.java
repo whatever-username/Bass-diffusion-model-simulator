@@ -10,13 +10,14 @@ import java.util.List;
  * 3:40
  */
 public class GraphicsOutputManager {
+    public AppContext context;
 
                                             //m- предельное количество пользователей
-    public static final double p = 0.03;    // коэффициент инновации (вероятность появления заинтересованности засчет масс-медиа или других внешн. факторов.
-    public static final double q = 0.38;    //  коэффициент имитации (вероятность появления заинтересованности засчет людей, уже пользующихся)
-    private ArrayList outputPointsArray = new ArrayList<Integer>();
-    private ArrayList outputDeltaArray = new ArrayList<Float>();
-    private ArrayList outputSrDeltaArray = new ArrayList<Float>();
+    public final double p = 0.03;    // коэффициент инновации (вероятность появления заинтересованности засчет масс-медиа или других внешн. факторов.
+    public final double q = 0.38;    //  коэффициент имитации (вероятность появления заинтересованности засчет людей, уже пользующихся)
+    private List outputPointsArray = new ArrayList<Integer>();
+    private List outputDeltaArray = new ArrayList<Float>();
+    private List outputSrDeltaArray = new ArrayList<Float>();
 
     public void addPoint(int amount) {
         outputPointsArray.add(amount);

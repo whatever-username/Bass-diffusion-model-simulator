@@ -1,51 +1,60 @@
 package ru.Frames;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 
+import ru.AppContext;
 import ru.Main;
 import ru.Settings;
+import sun.awt.windows.ThemeReader;
 
 
-/**
- * Created by техносила on 11.09.2016.
- */
 public class SettingsFrame extends JFrame {
-    public SettingsFrame() throws IOException, ClassNotFoundException {
-        JLabel
-                typeOfModelLabel, fieldWidthLabel, fieldHeightLabel,
-                from1to2LowerTresholdLabel, from2to3LowerTresholdLabel, from3to4LowerTresholdLabel, from4to3LowerTresholdLabel,
-                from1to2UpperTresholdLabel, from2to3UpperTresholdLabel, from3to4UpperTresholdLabel, from4to3UpperTresholdLabel,
-                from1to2SelfChanceLabel, from2to3SelfChanceLabel, from3to4SelfChanceLabel, from4to3SelfChanceLabel,
-                buffFromPositiveNeighbourLabel, buffFromNegativeNeighbourLabel, buffFromNewNeighbourLabel,
-                isChangingMindLabel;
+    AppContext context;
+    JFrame percentageFrame;
+    boolean sleeping =true;
+    JLabel
+            typeOfModelLabel, fieldWidthLabel, fieldHeightLabel,
+            from1to2LowerTresholdLabel, from2to3LowerTresholdLabel, from3to4LowerTresholdLabel, from4to3LowerTresholdLabel,
+            from1to2UpperTresholdLabel, from2to3UpperTresholdLabel, from3to4UpperTresholdLabel, from4to3UpperTresholdLabel,
+            from1to2SelfChanceLabel, from2to3SelfChanceLabel, from3to4SelfChanceLabel, from4to3SelfChanceLabel,
+            buffFromPositiveNeighbourLabel, buffFromNegativeNeighbourLabel, buffFromNewNeighbourLabel,
+            isChangingMindLabel;
 
-        JTextField
-                from1to2LowerTreshold, from2to3LowerTreshold, from3to4LowerTreshold, from4to3LowerTreshold,
-                from1to2UpperTreshold, from2to3UpperTreshold, from3to4UpperTreshold, from4to3UpperTreshold,
-                from1to2SelfChance, from2to3SelfChance, from3to4SelfChance, from4to3SelfChance,
-                buffFromPositiveNeighbour, buffFromNegativeNeighbour, buffFromNewNeighbour,
-                fieldWidth, fieldHeight;
+    JTextField
+            from1to2LowerTreshold, from2to3LowerTreshold, from3to4LowerTreshold, from4to3LowerTreshold,
+            from1to2UpperTreshold, from2to3UpperTreshold, from3to4UpperTreshold, from4to3UpperTreshold,
+            from1to2SelfChance, from2to3SelfChance, from3to4SelfChance, from4to3SelfChance,
+            buffFromPositiveNeighbour, buffFromNegativeNeighbour, buffFromNewNeighbour,
+            fieldWidth, fieldHeight;
 
-        JCheckBox isChangingMind;
-        JButton start;
-        JComboBox wayList;
-        String[] ways = {"Fill in randomly", "Blank field", "DNR Edition"};
+    JCheckBox isChangingMind;   //не используется
+    JButton start;
+    JComboBox wayList;      //не используется
+    public SettingsFrame(AppContext context)  {
+
+        this.context =  context;
+
+    }
+    public void init(String settingsInput) throws IOException, ClassNotFoundException, InterruptedException{
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+
+        String[] ways = {"Fill in randomly", "Blank field", "DNR Edition"};     //не используется
         GridBagConstraints gbc = new GridBagConstraints();
         setName("Model");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
-        File settingsFile = new File("temp.out");
+        File settingsFile = new File("settings.out");
         if (settingsFile.exists()!=true){
-            Settings.createSettings();
+            context.settings.createSettings();
         }
-        FileInputStream fis = new FileInputStream(settingsFile);
 
-        ObjectInputStream oin = new ObjectInputStream(fis);
-        Main.settings = (Settings) oin.readObject();
+        context.settings = Settings.loadSettings(settingsInput);
 
         int row = 0;
 
@@ -63,13 +72,101 @@ public class SettingsFrame extends JFrame {
         add(wayList, gbc);
         gbc.insets = new Insets(0, 0, 0, 0);
         row++;
+        //Для рандомного заполнения
+        GridBagConstraints gbcPercentage = new GridBagConstraints();
+        percentageFrame = new JFrame();
+        percentageFrame.setLayout(new GridBagLayout());
+        percentageFrame.setUndecorated(true);
+        percentageFrame.getRootPane().setWindowDecorationStyle(JRootPane.FRAME);
+        percentageFrame.setPreferredSize(new Dimension(400,100));
 
+        JLabel blackPercentageLabel = new JLabel("Black percentage: ");
+        JLabel bluePercentageLabel = new JLabel("Blue percentage: ");
+        JLabel redPercentageLabel = new JLabel("Red percentage: ");
+        JLabel greenPercentageLabel = new JLabel("Green percentage: ");
+        gbc.gridx = 0; gbc.gridy =0;
+        percentageFrame.add(blackPercentageLabel,gbc);
+        gbc.gridy = 1;
+        percentageFrame.add(bluePercentageLabel,gbc);
+        gbc.gridy = 2;
+        percentageFrame.add(redPercentageLabel,gbc);
+        gbc.gridy = 3;
+        percentageFrame.add(greenPercentageLabel,gbc);
+        JLabel blackPercentage = new JLabel("25");
+        JLabel bluePercentage = new JLabel("25");
+        JLabel redPercentage = new JLabel("25");
+        JLabel greenPercentage = new JLabel("25");
+        JSlider blackPercentageSlider = new JSlider(0,100,25);
+        JSlider bluePercentageSlider = new JSlider(0,100,25);
+        JSlider redPercentageSlider = new JSlider(0,100,25);
+        JSlider greenPercentageSlider = new JSlider(0,100,25);
+        blackPercentageSlider.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                blackPercentage.setText(blackPercentageSlider.getValue()+"");
+            }
+        });
+        bluePercentageSlider.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                bluePercentage.setText(bluePercentageSlider.getValue()+"");
+            }
+        });
+        redPercentageSlider.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                redPercentage.setText(redPercentageSlider.getValue()+"");
+            }
+        });
+        greenPercentageSlider.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                greenPercentage.setText(greenPercentageSlider.getValue()+"");
+            }
+        });
+
+
+
+        gbc.gridx=1; gbc.gridy=0;
+        percentageFrame.add(blackPercentage,gbc);
+        gbc.gridy=1;
+        percentageFrame.add(bluePercentage,gbc);
+        gbc.gridy=2;
+        percentageFrame.add(redPercentage,gbc);
+        gbc.gridy=3;
+        percentageFrame.add(greenPercentage,gbc);
+        gbc.gridx=2; gbc.gridy=0;
+        percentageFrame.add(blackPercentageSlider,gbc);
+        gbc.gridy=1;
+        percentageFrame.add(bluePercentageSlider,gbc);
+        gbc.gridy=2;
+        percentageFrame.add(redPercentageSlider,gbc);
+        gbc.gridy=3;
+        percentageFrame.add(greenPercentageSlider,gbc);
+        percentageFrame.pack();
+
+        wayList.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                switch (wayList.getSelectedItem().toString()){
+                    case "Fill in randomly":
+
+                        percentageFrame.setLocation(context.framesManager.settingsFrame.getX()+context.framesManager.settingsFrame.getWidth(),context.framesManager.settingsFrame.getY());
+                        percentageFrame.setVisible(true);
+                        break;
+                    default:
+                        percentageFrame.setVisible(false);
+                        break;
+                }
+            }
+        });
+        //Для рандомного заполнения
 
         fieldWidthLabel = new JLabel("field's width: ");
         gbc.gridx = 0;
         gbc.gridy = row;
         add(fieldWidthLabel, gbc);
-        fieldWidth = new JTextField((Main.settings.fieldWidth + ""), 10);
+        fieldWidth = new JTextField((context.settings.fieldWidth + ""), 10);
         gbc.gridx = 1;
         gbc.gridy = row;
         add(fieldWidth, gbc);
@@ -80,7 +177,7 @@ public class SettingsFrame extends JFrame {
         gbc.gridy = row;
         gbc.insets = new Insets(0, 0, 8, 0);
         add(fieldHeightLabel, gbc);
-        fieldHeight = new JTextField(Main.settings.fieldHeight + "", 10);
+        fieldHeight = new JTextField(context.settings.fieldHeight + "", 10);
         gbc.gridx = 1;
         gbc.gridy = row;
         add(fieldHeight, gbc);
@@ -91,7 +188,7 @@ public class SettingsFrame extends JFrame {
         gbc.gridx = 0;
         gbc.gridy = row;
         add(from1to2LowerTresholdLabel, gbc);
-        from1to2LowerTreshold = new JTextField(Main.settings.from1to2LowerTreshold + "", 10);
+        from1to2LowerTreshold = new JTextField(context.settings.from1to2LowerTreshold + "", 10);
         gbc.gridx = 1;
         gbc.gridy = row;
         add(from1to2LowerTreshold, gbc);
@@ -102,7 +199,7 @@ public class SettingsFrame extends JFrame {
         gbc.gridx = 0;
         gbc.gridy = row;
         add(from1to2UpperTresholdLabel, gbc);
-        from1to2UpperTreshold = new JTextField(Main.settings.from1to2UpperTreshold + "", 10);
+        from1to2UpperTreshold = new JTextField(context.settings.from1to2UpperTreshold + "", 10);
         gbc.gridx = 1;
         gbc.gridy = row;
         add(from1to2UpperTreshold, gbc);
@@ -115,7 +212,7 @@ public class SettingsFrame extends JFrame {
         gbc.gridx = 0;
         gbc.gridy = row;
         add(from2to3LowerTresholdLabel, gbc);
-        from2to3LowerTreshold = new JTextField(Main.settings.from2to3LowerTreshold + "", 10);
+        from2to3LowerTreshold = new JTextField(context.settings.from2to3LowerTreshold + "", 10);
         gbc.gridx = 1;
         gbc.gridy = row;
         add(from2to3LowerTreshold, gbc);
@@ -125,7 +222,7 @@ public class SettingsFrame extends JFrame {
         gbc.gridx = 0;
         gbc.gridy = row;
         add(from2to3UpperTresholdLabel, gbc);
-        from2to3UpperTreshold = new JTextField(Main.settings.from2to3UpperTreshold + "", 10);
+        from2to3UpperTreshold = new JTextField(context.settings.from2to3UpperTreshold + "", 10);
         gbc.gridx = 1;
         gbc.gridy = row;
         add(from2to3UpperTreshold, gbc);
@@ -136,7 +233,7 @@ public class SettingsFrame extends JFrame {
         gbc.gridx = 0;
         gbc.gridy = row;
         add(from3to4LowerTresholdLabel, gbc);
-        from3to4LowerTreshold = new JTextField(Main.settings.from3to4LowerTreshold + "", 10);
+        from3to4LowerTreshold = new JTextField(context.settings.from3to4LowerTreshold + "", 10);
         gbc.gridx = 1;
         gbc.gridy = row;
         add(from3to4LowerTreshold, gbc);
@@ -146,7 +243,7 @@ public class SettingsFrame extends JFrame {
         gbc.gridx = 0;
         gbc.gridy = row;
         add(from3to4UpperTresholdLabel, gbc);
-        from3to4UpperTreshold = new JTextField(Main.settings.from3to4UpperTreshold + "", 10);
+        from3to4UpperTreshold = new JTextField(context.settings.from3to4UpperTreshold + "", 10);
         gbc.gridx = 1;
         gbc.gridy = row;
         add(from3to4UpperTreshold, gbc);
@@ -157,7 +254,7 @@ public class SettingsFrame extends JFrame {
         gbc.gridx = 0;
         gbc.gridy = row;
         add(from4to3LowerTresholdLabel, gbc);
-        from4to3LowerTreshold = new JTextField(Main.settings.from4to3LowerTreshold + "", 10);
+        from4to3LowerTreshold = new JTextField(context.settings.from4to3LowerTreshold + "", 10);
         gbc.gridx = 1;
         gbc.gridy = row;
         add(from4to3LowerTreshold, gbc);
@@ -167,7 +264,7 @@ public class SettingsFrame extends JFrame {
         gbc.gridx = 0;
         gbc.gridy = row;
         add(from4to3UpperTresholdLabel, gbc);
-        from4to3UpperTreshold = new JTextField(Main.settings.from4to3UpperTreshold + "", 10);
+        from4to3UpperTreshold = new JTextField(context.settings.from4to3UpperTreshold + "", 10);
         gbc.gridx = 1;
         gbc.gridy = row;
         add(from4to3UpperTreshold, gbc);
@@ -179,7 +276,7 @@ public class SettingsFrame extends JFrame {
         gbc.gridx = 0;
         gbc.gridy = row;
         add(from1to2SelfChanceLabel, gbc);
-        from1to2SelfChance = new JTextField(Main.settings.from1to2SelfChance + "", 10);
+        from1to2SelfChance = new JTextField(context.settings.from1to2SelfChance + "", 10);
         gbc.gridx = 1;
         gbc.gridy = row;
         add(from1to2SelfChance, gbc);
@@ -190,7 +287,7 @@ public class SettingsFrame extends JFrame {
         gbc.gridx = 0;
         gbc.gridy = row;
         add(from2to3SelfChanceLabel, gbc);
-        from2to3SelfChance = new JTextField(Main.settings.from2to3SelfChance + "", 10);
+        from2to3SelfChance = new JTextField(context.settings.from2to3SelfChance + "", 10);
         gbc.gridx = 1;
         gbc.gridy = row;
         add(from2to3SelfChance, gbc);
@@ -201,7 +298,7 @@ public class SettingsFrame extends JFrame {
         gbc.gridx = 0;
         gbc.gridy = row;
         add(from3to4SelfChanceLabel, gbc);
-        from3to4SelfChance = new JTextField(Main.settings.from3to4SelfChance + "", 10);
+        from3to4SelfChance = new JTextField(context.settings.from3to4SelfChance + "", 10);
         gbc.gridx = 1;
         gbc.gridy = row;
         add(from3to4SelfChance, gbc);
@@ -212,7 +309,7 @@ public class SettingsFrame extends JFrame {
         gbc.gridx = 0;
         gbc.gridy = row;
         add(from4to3SelfChanceLabel, gbc);
-        from4to3SelfChance = new JTextField(Main.settings.from4to3SelfChance + "", 10);
+        from4to3SelfChance = new JTextField(context.settings.from4to3SelfChance + "", 10);
         gbc.gridx = 1;
         gbc.gridy = row;
         add(from4to3SelfChance, gbc);
@@ -223,7 +320,7 @@ public class SettingsFrame extends JFrame {
         gbc.gridy = row;
         gbc.insets = new Insets(12, 0, 0, 0);
         add(buffFromNegativeNeighbourLabel, gbc);
-        buffFromNegativeNeighbour = new JTextField(Main.settings.buffFromNegativeNeighbour + "", 10);
+        buffFromNegativeNeighbour = new JTextField(context.settings.buffFromNegativeNeighbour + "", 10);
         gbc.gridx = 1;
         gbc.gridy = row;
         add(buffFromNegativeNeighbour, gbc);
@@ -234,7 +331,7 @@ public class SettingsFrame extends JFrame {
         gbc.gridx = 0;
         gbc.gridy = row;
         add(buffFromPositiveNeighbourLabel, gbc);
-        buffFromPositiveNeighbour = new JTextField(Main.settings.buffFromPositiveNeighbour + "", 10);
+        buffFromPositiveNeighbour = new JTextField(context.settings.buffFromPositiveNeighbour + "", 10);
         gbc.gridx = 1;
         gbc.gridy = row;
         add(buffFromPositiveNeighbour, gbc);
@@ -244,7 +341,7 @@ public class SettingsFrame extends JFrame {
         gbc.gridx = 0;
         gbc.gridy = row;
         add(buffFromNewNeighbourLabel, gbc);
-        buffFromNewNeighbour = new JTextField(Main.settings.buffFromNewNeighbour + "", 10);
+        buffFromNewNeighbour = new JTextField(context.settings.buffFromNewNeighbour + "", 10);
         gbc.gridx = 1;
         gbc.gridy = row;
         add(buffFromNewNeighbour, gbc);
@@ -270,46 +367,50 @@ public class SettingsFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
 
+                context.settings.isChangingMind = isChangingMind.isSelected();
+                context.settings.from1to2LowerTreshold = Integer.parseInt(from1to2LowerTreshold.getText());
+                context.settings.from2to3LowerTreshold = Integer.parseInt(from2to3LowerTreshold.getText());
+                context.settings.from3to4LowerTreshold = Integer.parseInt(from3to4LowerTreshold.getText());
+                context.settings.from1to2UpperTreshold = Integer.parseInt(from1to2UpperTreshold.getText());
+                context.settings.from2to3UpperTreshold = Integer.parseInt(from2to3UpperTreshold.getText());
+                context.settings.from3to4UpperTreshold = Integer.parseInt(from3to4UpperTreshold.getText());
+                context.settings.from4to3LowerTreshold = Integer.parseInt(from4to3LowerTreshold.getText());
+                context.settings.from4to3UpperTreshold = Integer.parseInt(from4to3UpperTreshold.getText());
+                context.settings.fieldWidth = Integer.parseInt(fieldWidth.getText());
+                context.settings.fieldHeight = Integer.parseInt(fieldHeight.getText());
+                context.settings.from1to2SelfChance = Double.parseDouble(from1to2SelfChance.getText());
+                context.settings.from2to3SelfChance = Double.parseDouble(from2to3SelfChance.getText());
+                context.settings.from3to4SelfChance = Double.parseDouble(from3to4SelfChance.getText());
+                context.settings.from4to3SelfChance = Double.parseDouble(from4to3SelfChance.getText());
+                context.settings.buffFromNegativeNeighbour = Double.parseDouble(buffFromNegativeNeighbour.getText());
+                context.settings.buffFromPositiveNeighbour = Double.parseDouble(buffFromPositiveNeighbour.getText());
+                context.settings.buffFromNewNeighbour = Double.parseDouble(buffFromNewNeighbour.getText());
+                context.settings.initFieldType = wayList.getSelectedItem().toString();
+                context.settings.blackPercentage = Integer.parseInt(blackPercentage.getText());
+                context.settings.bluePercentage = Integer.parseInt(bluePercentage.getText());
+                context.settings.redPercentage = Integer.parseInt(redPercentage.getText());
+                context.settings.greenPercentage = Integer.parseInt(greenPercentage.getText());
 
-                Main.settings.isChangingMind = isChangingMind.isSelected();
-                Main.settings.from1to2LowerTreshold = Integer.parseInt(from1to2LowerTreshold.getText());
-                Main.settings.from2to3LowerTreshold = Integer.parseInt(from2to3LowerTreshold.getText());
-                Main.settings.from3to4LowerTreshold = Integer.parseInt(from3to4LowerTreshold.getText());
-                Main.settings.from1to2UpperTreshold = Integer.parseInt(from1to2UpperTreshold.getText());
-                Main.settings.from2to3UpperTreshold = Integer.parseInt(from2to3UpperTreshold.getText());
-                Main.settings.from3to4UpperTreshold = Integer.parseInt(from3to4UpperTreshold.getText());
-                Main.settings.from4to3LowerTreshold = Integer.parseInt(from4to3LowerTreshold.getText());
-                Main.settings.from4to3UpperTreshold = Integer.parseInt(from4to3UpperTreshold.getText());
-                Main.settings.fieldWidth = Integer.parseInt(fieldWidth.getText());
-                Main.settings.fieldHeight = Integer.parseInt(fieldHeight.getText());
-//                Main.settings.from1to2SelfChance = Integer.parseInt(from1to2SelfChance.getText());
-//                Main.settings.from2to3SelfChance = Integer.parseInt(from2to3SelfChance.getText());
-//                Main.settings.from3to4SelfChance = Integer.parseInt(from3to4SelfChance.getText());
-//                Main.settings.from4to3SelfChance = Integer.parseInt(from4to3SelfChance.getText());
-//                Main.settings.buffFromNegativeNeighbour = Integer.parseInt(buffFromNegativeNeighbour.getText());
-//                Main.settings.buffFromPositiveNeighbour = Integer.parseInt(buffFromPositiveNeighbour.getText());
-//                Main.settings.buffFromNewNeighbour = Integer.parseInt(buffFromNewNeighbour.getText());
-                Main.settings.from1to2SelfChance = Double.parseDouble(from1to2SelfChance.getText());
-                Main.settings.from2to3SelfChance = Double.parseDouble(from2to3SelfChance.getText());
-                Main.settings.from3to4SelfChance = Double.parseDouble(from3to4SelfChance.getText());
-                Main.settings.from4to3SelfChance = Double.parseDouble(from4to3SelfChance.getText());
-                Main.settings.buffFromNegativeNeighbour = Double.parseDouble(buffFromNegativeNeighbour.getText());
-                Main.settings.buffFromPositiveNeighbour = Double.parseDouble(buffFromPositiveNeighbour.getText());
-                Main.settings.buffFromNewNeighbour = Double.parseDouble(buffFromNewNeighbour.getText());
 
-                Settings.saveSettings();
-                Main.fieldManager.initializeBlack();
+                context.settings.saveSettings("settings.out");
+                context.fieldManager.initField();
                 setVisible(false);
                 //Продолжить выполнение в программе             ПЕРЕХОД КО ВТОРОМУ ОКНУ
-                FramesManager.readyForSimulation = true;
+                sleeping=false;
+                synchronized (context.framesManager.simulationFrame){
+                    context.framesManager.simulationFrame.notifyAll();
+                }
             }
         });
         add(start, gbc);
         pack();
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         setLocation(screenSize.width / 2 - size().width / 2, screenSize.height / 2 - size().height / 2);
         setVisible(true);
+        percentageFrame.setLocation(context.framesManager.settingsFrame.getX()+context.framesManager.settingsFrame.getWidth(),context.framesManager.settingsFrame.getY());
+        percentageFrame.setVisible(true);
+
     }
+
 
 
 }

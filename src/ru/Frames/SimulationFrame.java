@@ -1,5 +1,6 @@
 package ru.Frames;
 
+import ru.AppContext;
 import ru.Keyboard;
 import ru.Main;
 import ru.Mouse;
@@ -13,15 +14,18 @@ import java.awt.event.ActionListener;
 
 public class SimulationFrame extends JFrame {
     public Canvas c;
+    public AppContext context;
+    JButton black, blue, red, green, cellField, supercellField;
+    JPanel colorButtons, layerButtons, commandPanel;
+    JSlider diameter;
+    JLabel diameterText, radiusText;
+    GridBagConstraints gbc = new GridBagConstraints();
 
+    public SimulationFrame(AppContext context){
+        this.context = context;
 
-
-    public SimulationFrame(){
-        JButton black, blue, red, green, cellField, supercellField;
-        JPanel colorButtons, layerButtons, commandPanel;
-        JSlider diameter;
-        JLabel diameterText, radiusText;
-        GridBagConstraints gbc = new GridBagConstraints();
+    }
+    public void init(){
         setLayout(new GridBagLayout());
         red = new JButton("red");
         black = new JButton("black");
@@ -37,14 +41,14 @@ public class SimulationFrame extends JFrame {
         cellField.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Main.renderingField= 1;
+                context.renderingField= 1;
             }
         });
         supercellField = new JButton("supercell layer");
         supercellField.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Main.renderingField = 2;
+                context.renderingField = 2;
             }
         });
         diameter = new JSlider(JSlider.HORIZONTAL, 1, 500, 1);
@@ -54,15 +58,15 @@ public class SimulationFrame extends JFrame {
         diameter.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
-                Main.areaEffectDiameter = diameter.getValue();
-                diameterText.setText("Area of supercells: "+Main.areaEffectDiameter);
+                context.areaEffectDiameter = diameter.getValue();
+                diameterText.setText("Area of supercells: "+context.areaEffectDiameter);
             }
         });
         red.setPreferredSize(new Dimension(70, 20));
         red.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Main.color = Color.red;
+                context.color = Color.red;
                 colorText.setText("Current: red");
                 indicator.setBackground(Color.RED);
             }
@@ -71,7 +75,7 @@ public class SimulationFrame extends JFrame {
         black.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Main.color = Color.black;
+                context.color = Color.black;
                 colorText.setText("Current: black");
                 indicator.setBackground(Color.BLACK);
             }
@@ -80,7 +84,7 @@ public class SimulationFrame extends JFrame {
         blue.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Main.color = Color.blue;
+                context.color = Color.blue;
                 colorText.setText("Current: blue");
                 indicator.setBackground(Color.BLUE);
             }
@@ -89,7 +93,7 @@ public class SimulationFrame extends JFrame {
         green.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Main.color = Color.green;
+                context.color = Color.green;
                 colorText.setText("Current: green");
                 indicator.setBackground(Color.GREEN);
             }
@@ -128,13 +132,13 @@ public class SimulationFrame extends JFrame {
         layerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (Main.renderingField ==1){
-                    Main.renderingField =2;
+                if (context.renderingField ==1){
+                    context.renderingField =2;
                     layerButton.setText("Supercells");
 
                 }                                       // ЗАМЕНИТЬ НА TRUE FALSE
-                else if (Main.renderingField==2){
-                    Main.renderingField=1;
+                else if (context.renderingField==2){
+                    context.renderingField=1;
                     layerButton.setText("Cells");
                 }
             }
@@ -157,41 +161,53 @@ public class SimulationFrame extends JFrame {
 
 
         JButton startButton = new JButton("Start simulation");
-        startButton.setPreferredSize(new Dimension(140,40));
-        gbc.gridy=4; gbc.gridx =1; gbc.gridwidth=1;
+        startButton.setPreferredSize(new Dimension(140,20));
 
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Main.processing = true;
+                context.processing = true;
 
             }
         });
-        add(startButton,gbc);
         JButton closeButton = new JButton("Stop");
-        closeButton.setPreferredSize(new Dimension(140,40));
-        gbc.gridy = 4; gbc.gridwidth=1;
-        colomn=3; gbc.gridx=colomn;
+        closeButton.setPreferredSize(new Dimension(140,20));
+
         closeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Main.processing = false;
+                context.processing = false;
                 try{
-                    Main.manager.writeToFileSimulated("plotSimulated1.csv",1, false);
-//                    Main.manager.writeToFileBass("C:\\Users\\техносила\\Google Диск\\Java Projects\\Текущие\\Graph\\out\\plotBass.csv");
-//                    Main.manager.writeBothToFile("C:\\Users\\техносила\\Google Диск\\Java Projects\\Текущие\\Graph\\out\\bothPlots.csv");
+                    context.graphicsOutputManager.writeToFileSimulated("plotSimulated1.csv",1, false);
+//                    context.manager.writeToFileBass("C:\\Users\\техносила\\Google Диск\\Java Projects\\Текущие\\Graph\\out\\plotBass.csv");
+//                    context.manager.writeBothToFile("C:\\Users\\техносила\\Google Диск\\Java Projects\\Текущие\\Graph\\out\\bothPlots.csv");
                 }catch (Exception ex){
                     ex.printStackTrace();
                 }
 
             }
         });
-        add(closeButton,gbc);
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridBagLayout());
+        gbc.gridx=0;gbc.gridy=1; gbc.gridwidth=1;
+        gbc.insets = new Insets(5 ,20,5,20);
+        panel.add(startButton,gbc);
+        gbc.gridx=1;
+        panel.add(closeButton,gbc);
+        gbc.insets = new Insets(0,0,0,0);
+
+
+
+        gbc.gridwidth=6;
+        gbc.gridx=0; gbc.gridy=4;
+        panel.setPreferredSize(new Dimension(600,30));
+        add(panel,gbc);
+
         pack();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(null);
-        setVisible(false);
+        setVisible(true);
         c.createBufferStrategy(2);    // ex. NUM_BUFFERS
         Mouse.create(c);
         Keyboard.create(c);
