@@ -25,6 +25,7 @@ public class Main {
             }
             else {
                 context.fieldManager.calculate();
+
             }
         }
 
