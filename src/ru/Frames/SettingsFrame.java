@@ -16,7 +16,8 @@ import sun.awt.windows.ThemeReader;
 
 public class SettingsFrame extends JFrame {
     AppContext context;
-    JFrame percentageFrame;
+//    JFrame percentageFrame;
+    PercentageFrame percentageFrame;
     boolean sleeping =true;
     JLabel
             typeOfModelLabel, fieldWidthLabel, fieldHeightLabel,
@@ -43,7 +44,7 @@ public class SettingsFrame extends JFrame {
     }
     public void init(String settingsInput) throws IOException, ClassNotFoundException, InterruptedException{
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-
+        percentageFrame = new PercentageFrame();
         String[] ways = {"Fill in randomly", "Blank field", "DNR Edition"};     //не используется
         GridBagConstraints gbc = new GridBagConstraints();
         setName("Model");
@@ -73,9 +74,10 @@ public class SettingsFrame extends JFrame {
         gbc.insets = new Insets(0, 0, 0, 0);
         row++;
         //Для рандомного заполнения
-        GridBagConstraints gbcPercentage = new GridBagConstraints();
-        percentageFrame = new JFrame();
-        percentageFrame.setLayout(new GridBagLayout());
+//        GridBagConstraints gbcPercentage = new GridBagConstraints();
+//        percentageFrame = new JFrame();
+
+       /* percentageFrame.setLayout(new GridBagLayout());
         percentageFrame.setUndecorated(true);
         percentageFrame.getRootPane().setWindowDecorationStyle(JRootPane.FRAME);
         percentageFrame.setPreferredSize(new Dimension(400,100));
@@ -100,10 +102,14 @@ public class SettingsFrame extends JFrame {
         JSlider bluePercentageSlider = new JSlider(0,100,25);
         JSlider redPercentageSlider = new JSlider(0,100,25);
         JSlider greenPercentageSlider = new JSlider(0,100,25);
+
         blackPercentageSlider.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
-                blackPercentage.setText(blackPercentageSlider.getValue()+"");
+                if(blackPercentageSlider.getValue()+bluePercentageSlider.getValue()+redPercentageSlider.getValue()+greenPercentageSlider.getValue()>100){
+
+                }
+                    blackPercentage.setText(blackPercentageSlider.getValue()+"");
             }
         });
         bluePercentageSlider.addChangeListener(new ChangeListener() {
@@ -143,7 +149,7 @@ public class SettingsFrame extends JFrame {
         percentageFrame.add(redPercentageSlider,gbc);
         gbc.gridy=3;
         percentageFrame.add(greenPercentageSlider,gbc);
-        percentageFrame.pack();
+        percentageFrame.pack();*/
 
         wayList.addActionListener(new ActionListener() {
             @Override
@@ -386,13 +392,14 @@ public class SettingsFrame extends JFrame {
                 context.settings.buffFromPositiveNeighbour = Double.parseDouble(buffFromPositiveNeighbour.getText());
                 context.settings.buffFromNewNeighbour = Double.parseDouble(buffFromNewNeighbour.getText());
                 context.settings.initFieldType = wayList.getSelectedItem().toString();
-                context.settings.blackPercentage = Integer.parseInt(blackPercentage.getText());
-                context.settings.bluePercentage = Integer.parseInt(bluePercentage.getText());
-                context.settings.redPercentage = Integer.parseInt(redPercentage.getText());
-                context.settings.greenPercentage = Integer.parseInt(greenPercentage.getText());
+                context.settings.blackPercentage = Integer.parseInt(percentageFrame.blackPercentage.getText());
+                context.settings.bluePercentage = Integer.parseInt(percentageFrame.bluePercentage.getText());
+                context.settings.redPercentage = Integer.parseInt(percentageFrame.redPercentage.getText());
+                context.settings.greenPercentage = Integer.parseInt(percentageFrame.greenPercentage.getText());
 
 
                 context.settings.saveSettings("settings.out");
+                percentageFrame.setVisible(false);
                 context.fieldManager.initField();
                 setVisible(false);
                 //Продолжить выполнение в программе             ПЕРЕХОД КО ВТОРОМУ ОКНУ

@@ -39,10 +39,12 @@ public class FieldManager {
         String color;
         public int percentage;
         int number;
+        int amount;
         public CellColor(String color, int percentage, int number){
             this.color = color;
             this.percentage = percentage;
             this.number=number;
+            this.amount=0;
         }
         public String toString(){
             return (color+"; "+ percentage+"; "+number);
@@ -95,16 +97,29 @@ public class FieldManager {
                 int chance = (int) (Math.random()*100);
                 if ((chance < colors.get(0).percentage) && (chance >= 0)) {
                     context.field[height][width] = new Cell(colors.get(0).number);
+                    colors.get(0).amount++;
                 }
                 else if ((chance>=colors.get(0).percentage)&&(chance<(colors.get(0).percentage+colors.get(1).percentage))){
                     context.field[height][width] = new Cell(colors.get(1).number);
+                    colors.get(1).amount++;
                 }
                 else if ((chance>=(colors.get(1).percentage+colors.get(0).percentage))&&(chance<(colors.get(0).percentage+colors.get(1).percentage+colors.get(2).percentage))){
                     context.field[height][width] = new Cell(colors.get(2).number);
+                    colors.get(2).amount++;
                 }else {
                     context.field[height][width] = new Cell(colors.get(3).number);
+                    colors.get(3).amount++;
                 }
             }
+        }
+        System.out.println("Поле инициализированно случайным образом:");
+        for (CellColor color: colors) {
+            System.out.print("  "+color.color+": "
+                             +color.amount
+                             +"("
+                             +((double)color.amount/(context.settings.fieldHeight*context.settings.fieldWidth)*10000)/100
+                             +"); ");
+
         }
     }
 

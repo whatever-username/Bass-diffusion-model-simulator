@@ -13,9 +13,9 @@ public class GraphicsOutputManager {
     public AppContext context;
 
                                             //m- предельное количество пользователей
-    public final double p = 0.03;    // коэффициент инновации (вероятность появления заинтересованности засчет масс-медиа или других внешн. факторов.
-    public final double q = 0.38;    //  коэффициент имитации (вероятность появления заинтересованности засчет людей, уже пользующихся)
-    private List outputPointsArray = new ArrayList<Integer>();
+    public final double p = 0.01;    // коэффициент инновации (вероятность появления заинтересованности засчет масс-медиа или других внешн. факторов.
+    public final double q = 0.01;    //  коэффициент имитации (вероятность появления заинтересованности засчет людей, уже пользующихся)
+    public List<Integer> outputPointsArray = new ArrayList<Integer>();
     private List outputDeltaArray = new ArrayList<Float>();
     private List outputSrDeltaArray = new ArrayList<Float>();
 
@@ -75,7 +75,7 @@ public class GraphicsOutputManager {
     public List bassModel(double m, double p, double q){
         List<String> lines = new ArrayList<>();
         double f;
-        for (double t = 0; t < 15 ; t+=0.01) {
+        for (double t = 0; t < 1370 ; t+=0.01) {
             f = m* ((1-Math.pow(Math.E,-(p+q)*t))/(1+q/p*Math.pow(Math.E,-(p+q)*t)));
 
             String b = /*t+";"+*/f+"\r\n";
@@ -83,6 +83,14 @@ public class GraphicsOutputManager {
             lines.add(b);
         }
         return lines;
+    }
+    public void writeToFile(List list,String pathToFile) throws IOException {
+        FileWriter writer = new FileWriter(pathToFile, false);
+        for (Object line : list) {
+            writer.write    ((line.toString()+"\n").replace(".",","));
+        }
+        writer.flush();
+        writer.close();
     }
     public void writeToFileBass(String pathToFile) throws IOException {
         List<String> lines = bassModel(10000,p,q);
