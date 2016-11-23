@@ -4,9 +4,8 @@ import java.awt.*;
 import java.util.*;
 import java.util.List;
 
-/**
- * Created by техносила on 10.09.2016.
- */
+import static java.lang.System.currentTimeMillis;
+
 public class FieldManager {
     /** Для учета количества пользователей на поле и записи в файл
      *  @see GraphicsOutputManager#addPoint(int)
@@ -54,7 +53,16 @@ public class FieldManager {
             return percentage;
         }
     }
+    /*public void initBeaconLayer(){
+        context.beaconCellField = new BeaconCell[context.settings.fieldWidth][context.settings.fieldHeight];
+        for (int width = 0; width < context.settings.fieldWidth; width++) {
+            for (int height = 0; height < context.settings.fieldHeight; height++) {
+                context.beaconCellField[width][height] = new BeaconCell(0,0);
+            }
+        }
+    }*/
     public void initField(){
+//        initBeaconLayer();
         switch (context.settings.initFieldType){
             case "Fill in randomly":
                 initializeRandom(context.settings.blackPercentage,context.settings.bluePercentage,context.settings.redPercentage,context.settings.greenPercentage);
@@ -124,33 +132,55 @@ public class FieldManager {
     }
 
 
-    public void update(CellInterface field[][]) {
+    public void update() {
 
         if (Mouse.isButtonDown(1)) {
 
             int cellX = Mouse.getCellX();       //заменить                                          !!!
             int cellY = Mouse.getCellY();       //заменить                                          !!!
             //0-не пользовавшийся, 1- новый , 2 -удаливший, 3- пользующийся повторно
-            if (context.renderingField == 1) { //ставить клетки на поле обычных клеток
-
+            int type =0;
+            if (context.color == Color.BLUE){
+                type = 1;
+            }else if (context.color == Color.RED){
+                type = 2;
+            }else if (context.color == Color.GREEN){
+                type = 3;
+            }
+            if (context.renderingField == 1){
+                context.field[cellY][cellX].setType(type);
+            }else {
                 try {
 
-                    if (context.color == Color.BLACK) {
-                        field[cellY][cellX].setType(0);
-                    } else if (context.color == Color.BLUE) {
-                        field[cellY][cellX].setType(1);
+//                        context.beaconCellField[cellY][cellX].setAreaOfEffect(context.areaEffectDiameter);
+                    if (type ==0){
+                        context.beaconCells.remove(new Dimension(cellX,cellY));
+                    }else if (context.beaconCells.get(new Dimension(cellX,cellY))!=null)  {
 
-                    } else if (context.color == Color.RED) {
-                        field[cellY][cellX].setType(2);
-                    } else if (context.color == Color.GREEN) {
-                        field[cellY][cellX].setType(3);
+                       Thread thread = new Thread(new Runnable() {
+                           @Override
+                           public void run() {
+                               System.out.println(context.beaconCells.get(new Dimension(cellX, cellY)).toString());
+                               System.out.println(context.beaconCells.get(new Dimension(cellX, cellY)).listDependent());
+                               try {
+                                   Thread.sleep(1000);
+                               } catch (InterruptedException e) {
+                                   e.printStackTrace();
+                               }
+                           }
+                       });
+                        thread.run();
+
+                    }else {
+                        context.beaconCells.put(new Dimension(cellX,cellY),new BeaconCell(type,context.areaEffectDiameter,context.beaconCellInfuence, cellX,cellY));
+
                     }
-                } catch (ArrayIndexOutOfBoundsException ex) {
                 }
-            }else if (context.renderingField == 2){ //заполнять поле суперклеток
-
+                catch (ArrayIndexOutOfBoundsException ex) {
+                }
             }
-//
+
+
         }
 
     }
@@ -159,6 +189,7 @@ public class FieldManager {
      */
     public void calculate() {
         usersCount=0;
+
         stage++;
         context.bufferField = new Cell[context.settings.fieldHeight][context.settings.fieldWidth];
 
@@ -167,6 +198,7 @@ public class FieldManager {
                 positiveNeighboursAmount = 0;
                 negativeNeighboursAmount = 0;
                 newNeighboursAmount = 0;
+
                 //0-не пользовавшийся, 1- новый , 2 -удаливший, 3- пользующийся повторно
                 for (int i = -1; i <= 1; i++) {
                     for (int j = -1; j <= 1; j++) {
@@ -189,6 +221,7 @@ public class FieldManager {
                     }
                 }
                 double chance = 0;
+
 
                 switch (context.field[height][width].getType()) {
                     case 0: /*пустой*/

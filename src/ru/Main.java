@@ -10,20 +10,19 @@ import java.io.*;
 import java.util.*;
 import java.util.List;
 
-/**
- * Created by техносила on 09.09.2016.
- */
 public class Main {
 
     public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
 
         AppContext context = new AppContext();
-
+        Util.setContext(context);
         context.framesManager.initializeFrames("settings.out");
         while(true){
+
             context.framesManager.render();
             if (context.processing==false){
-                context.fieldManager.update(context.field);
+                    context.fieldManager.update();
+
             }
             else if (context.fieldManager.usersCount != context.settings.fieldWidth*context.settings.fieldHeight){
                 context.fieldManager.calculate();

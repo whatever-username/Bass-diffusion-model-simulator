@@ -4,6 +4,7 @@ import ru.Frames.FramesManager;
 
 import java.awt.*;
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.Set;
 
 /**
@@ -20,7 +21,9 @@ public class AppContext {
     public Color color;
     public boolean ready=false;
     public boolean processing = false;
+    public int beaconCellInfuence=0;
     public Cell field[][];
+    public HashMap<Dimension,BeaconCell> beaconCells = new HashMap<>();
     public Cell bufferField[][];
 
     public AppContext(){

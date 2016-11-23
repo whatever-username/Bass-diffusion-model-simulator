@@ -17,8 +17,8 @@ public class SimulationFrame extends JFrame {
     public AppContext context;
     JButton black, blue, red, green, cellField, supercellField;
     JPanel colorButtons, layerButtons, commandPanel;
-    JSlider diameter;
-    JLabel diameterText, radiusText;
+    JSlider diameter, influence;
+    JLabel diameterText, influenceText;
     GridBagConstraints gbc = new GridBagConstraints();
 
     public SimulationFrame(AppContext context){
@@ -51,17 +51,7 @@ public class SimulationFrame extends JFrame {
                 context.renderingField = 2;
             }
         });
-        diameter = new JSlider(JSlider.HORIZONTAL, 1, 500, 1);
-        diameter.setPreferredSize(new Dimension(140,20));
-        diameterText = new JLabel("Area of supercells: 0");
-        radiusText = new JLabel();
-        diameter.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                context.areaEffectDiameter = diameter.getValue();
-                diameterText.setText("Area of supercells: "+context.areaEffectDiameter);
-            }
-        });
+
         red.setPreferredSize(new Dimension(70, 20));
         red.addActionListener(new ActionListener() {
             @Override
@@ -148,15 +138,48 @@ public class SimulationFrame extends JFrame {
         add(layerButton,gbc);
         colomn++;
         gbc.gridx=colomn; gbc.gridwidth=2;
+
+
+        diameter = new JSlider(JSlider.HORIZONTAL, 1, 999, 1);
+        diameter.setPreferredSize(new Dimension(90,20));
+        diameterText = new JLabel("Diameter: 0");
+        diameterText.setPreferredSize(new Dimension(80,20));
+
+        diameter.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                context.areaEffectDiameter = diameter.getValue();
+                diameterText.setText("Diameter: "+context.areaEffectDiameter);
+            }
+        });
+        gbc.gridwidth=1;
         add(diameter,gbc);
         line--;
-        gbc.gridy=line; gbc.gridwidth=1;
-        diameterText.setPreferredSize(new Dimension(135,20));
+        gbc.gridy=line;
         add(diameterText,gbc);
-        gbc.insets = new Insets(0,0,0,0);
 
+
+        //Влияние суперклеток
+        influence = new JSlider(JSlider.HORIZONTAL,0,100,1);
+        influence.setPreferredSize(new Dimension(80,20));                                 //
+        influence.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                influenceText.setText("Influence: "+influence.getValue());
+                context.beaconCellInfuence = influence.getValue();
+            }
+        });
+        influenceText = new JLabel("Influence: 0");
+        influenceText.setPreferredSize(new Dimension(90,20));
+        line=0; colomn=5;
+        gbc.gridy=line; gbc.gridx = colomn; gbc.gridheight=1;
+        add(influenceText,gbc);
+         gbc.gridy=1;
+        add(influence,gbc);
+
+        gbc.insets = new Insets(0,0,0,0);
         colomn=0; line=3;
-        gbc.gridx=colomn; gbc.gridy=line; gbc.gridwidth=6; gbc.gridheight=1;
+        gbc.gridx=colomn; gbc.gridy=line; gbc.gridwidth=8; gbc.gridheight=1;
         add(c,gbc);
 
 
