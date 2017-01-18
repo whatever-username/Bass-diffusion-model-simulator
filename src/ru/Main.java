@@ -16,6 +16,7 @@ public class Main {
 
         AppContext context = new AppContext();
         Util.setContext(context);
+
         context.framesManager.initializeFrames("settings.out");
         while(true){
 
@@ -29,8 +30,8 @@ public class Main {
 
             }
         }
-        /*NoVisual noVisual = new NoVisual(context);
 
+        /*NoVisual noVisual = new NoVisual(context);
         context.settings=Settings.loadSettings("settings.out");
         context.settings.buffFromNewNeighbour=1.4;
         context.fieldManager.stage=0;
@@ -38,17 +39,24 @@ public class Main {
         context.graphicsOutputManager.outputPointsArray = new ArrayList<>();
         context.fieldManager.initializeBlack();
         context.field[50][50] = new Cell(1);
-        while (context.fieldManager.usersCount != 10000){
+        noVisual.findpairWithMaxCorrelation();*/
+
+        /*NoVisual noVisual = new NoVisual(context);
+        context.settings=Settings.loadSettings("settings.out");
+        context.settings.buffFromNewNeighbour = 0.1;
+        context.settings.from2to3SelfChance = 0.0;
+        context.fieldManager.stage = 0;
+        context.fieldManager.usersCount = 0;
+        context.graphicsOutputManager.outputPointsArray = new ArrayList<>();
+        context.fieldManager.initializeBlack();
+        context.field[50][50] = new Cell(1);
+        while (context.fieldManager.usersCount != 10000) {
             context.fieldManager.calculate();
 
         }
-        context.graphicsOutputManager.writeToFile(context.graphicsOutputManager.outputPointsArray,"C:\\Users\\техносила\\Desktop\\Temp\\model.csv");
-        List<Double> Bass = noVisual.BassModel(0.01,0.89,context.fieldManager.stage);
-        context.graphicsOutputManager.writeToFile(Bass,"C:\\Users\\техносила\\Desktop\\Temp\\bass.csv");
-        System.out.println(noVisual.compare(context.graphicsOutputManager.outputPointsArray,Bass));*/
-
-
-//        noVisual.findpairWithMaxCorrelation();
+        List<Double> Bass = noVisual.BassModel(0.11, 0.63, context.fieldManager.stage);
+        context.graphicsOutputManager.writeToFile(Bass, "C:\\Users\\техносила\\Desktop\\testModel\\011_063_Bass_2.csv");
+        context.graphicsOutputManager.writeToFile(context.graphicsOutputManager.outputPointsArray, "C:\\Users\\техносила\\Desktop\\testModel\\01_00_Model_2.csv");*/
 
 
 

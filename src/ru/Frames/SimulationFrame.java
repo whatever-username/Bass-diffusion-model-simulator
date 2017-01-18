@@ -1,9 +1,6 @@
 package ru.Frames;
 
-import ru.AppContext;
-import ru.Keyboard;
-import ru.Main;
-import ru.Mouse;
+import ru.*;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -11,6 +8,7 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Map;
 
 public class SimulationFrame extends JFrame {
     public Canvas c;
@@ -187,8 +185,24 @@ public class SimulationFrame extends JFrame {
         startButton.setPreferredSize(new Dimension(140,20));
 
         startButton.addActionListener(new ActionListener() {
+
             @Override
             public void actionPerformed(ActionEvent e) {
+                for (Map.Entry entry:   context.beaconCells.entrySet()) {
+                    Dimension coordinates = (Dimension) entry.getKey();
+                    int x = (int)coordinates.getWidth();
+                    int y = (int)coordinates.getHeight();
+                    BeaconCell curBeaconCell = (BeaconCell)entry.getValue();
+                    for (int i = 0; i < curBeaconCell.dependent.size(); i++) {
+                        //UPD
+                        if ((curBeaconCell.getType() == 1)||(curBeaconCell.getType() == 3)){
+                            context.effectFromBeaconCells[x+(int)curBeaconCell.dependent.get(i).getWidth()][y+(int)curBeaconCell.dependent.get(i).getHeight()] += curBeaconCell.getInfluence();
+                        }
+                        if (curBeaconCell.getType() == 2){
+                            context.effectFromBeaconCells[x+(int)curBeaconCell.dependent.get(i).getWidth()][y+(int)curBeaconCell.dependent.get(i).getHeight()] -= curBeaconCell.getInfluence();
+                        }
+                    }
+                }
                 context.processing = true;
 
             }

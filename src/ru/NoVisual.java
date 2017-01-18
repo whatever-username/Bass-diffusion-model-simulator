@@ -81,39 +81,42 @@ public class NoVisual {
         double min =999999999;
         double corrCoef=-1;
         for (double i = 0; i < 100; i+=0.1) {
-            context.settings.buffFromNewNeighbour+=0.1;
-            context.settings.buffFromNewNeighbour= Math.rint(100.0 * context.settings.buffFromNewNeighbour) / 100.0;
-            context.fieldManager.stage=0;
-            context.fieldManager.usersCount=0;
-            context.graphicsOutputManager.outputPointsArray = new ArrayList<>();
-            context.fieldManager.initializeBlack();
-            context.field[50][50] = new Cell(1);
-            while (context.fieldManager.usersCount != 10000){
-                context.fieldManager.calculate();
+            for (double negativeSelfChance = 0; negativeSelfChance <= 100; negativeSelfChance+=0.1) {
+                context.settings.buffFromNewNeighbour += 0.1;
+                context.settings.buffFromNewNeighbour = Math.rint(100.0 * context.settings.buffFromNewNeighbour) / 100.0;
+                context.settings.from2to3SelfChance = Math.rint(100.0 * negativeSelfChance) / 100.0;
+                context.fieldManager.stage = 0;
+                context.fieldManager.usersCount = 0;
+                context.graphicsOutputManager.outputPointsArray = new ArrayList<>();
+                context.fieldManager.initializeBlack();
+                context.field[50][50] = new Cell(1);
+                while (context.fieldManager.usersCount != 10000) {
+                    context.fieldManager.calculate();
 
-            }
+                }
 //            context.graphicsOutputManager.writeToFile(context.graphicsOutputManager.outputPointsArray,"C:\\Users\\техносила\\Desktop\\Temp\\model.csv");
 
-            for (double p = 0.01; p < 1; p+=0.01) {
-                for (double q = 0.01; q < 1; q+=0.01) {
-                    q = Math.rint(100.0 * q) / 100.0;
-                    List<Double> Bass = BassModel(p,q,context.fieldManager.stage);
-                    double result = compare(context.graphicsOutputManager.outputPointsArray,Bass);
-                    double resultPearson = correlation(context.graphicsOutputManager.outputPointsArray,Bass);
-                    double resultChiSquared = chiSquared(context.graphicsOutputManager.outputPointsArray,Bass);
-                    if (     result < min    ){
-                        min= result;
+                for (double p = 0.01; p < 1; p += 0.01) {
+                    for (double q = 0.01; q < 1; q += 0.01) {
+                        q = Math.rint(100.0 * q) / 100.0;
+                        List<Double> Bass = BassModel(p, q, context.fieldManager.stage);
+                        double result = compare(context.graphicsOutputManager.outputPointsArray, Bass);
+                        double resultPearson = correlation(context.graphicsOutputManager.outputPointsArray, Bass);
+                        double resultChiSquared = chiSquared(context.graphicsOutputManager.outputPointsArray, Bass);
+                        if (result < min) {
+                            min = result;
 
 //                        context.graphicsOutputManager.writeToFile(Bass,"C:\\Users\\техносила\\Desktop\\Temp\\bass.csv");
-                        System.out.println("По ошибке. При коэффициенте модели "+context.settings.buffFromNewNeighbour+" и p= "+p+" и q="+q
-                                +" ошибка = "+min+"; к. Пирсона равен "+corrCoef+"; хи-квадрат :"
-                                +resultChiSquared);
-                    }
-                    if (    resultPearson>corrCoef){
-                        corrCoef = resultPearson;
-                        System.out.println("По Пирсону. При коэффициенте модели "+context.settings.buffFromNewNeighbour+" и p= "+p+" и q="+q
-                                +" ошибка = "+min+"; к. Пирсона равен "+corrCoef+"; хи-квадрат :"
-                                +resultChiSquared);
+                            System.out.println("По ошибке. При коэффициенте 1to2self =" + context.settings.buffFromNewNeighbour +", 2to3self = "+negativeSelfChance+" и p= " + p + " и q=" + q
+                                    + " ошибка = " + min + "; к. Пирсона равен " + corrCoef + "; хи-квадрат :"
+                                    + resultChiSquared);
+                        }
+                        if (resultPearson > corrCoef) {
+                            corrCoef = resultPearson;
+                            System.out.println("По Пирсону. При коэффициенте 1to2self =" + context.settings.buffFromNewNeighbour +", 2to3self = "+negativeSelfChance+" и p= " + p + " и q=" + q
+                                    + " ошибка = " + min + "; к. Пирсона равен " + corrCoef + "; хи-квадрат :"
+                                    + resultChiSquared);
+                        }
                     }
                 }
             }

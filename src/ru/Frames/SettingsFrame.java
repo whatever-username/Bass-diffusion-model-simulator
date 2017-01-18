@@ -401,6 +401,7 @@ public class SettingsFrame extends JFrame {
                 context.settings.saveSettings("settings.out");
                 percentageFrame.setVisible(false);
                 context.fieldManager.initField();
+                context.effectFromBeaconCells = new int[context.settings.fieldWidth][context.settings.fieldWidth];
                 setVisible(false);
                 //Продолжить выполнение в программе             ПЕРЕХОД КО ВТОРОМУ ОКНУ
                 sleeping=false;

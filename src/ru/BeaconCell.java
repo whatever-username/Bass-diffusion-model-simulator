@@ -17,7 +17,7 @@ public class BeaconCell implements CellInterface {
     int type;
     int influence = 0;
     int areaOfEffect;
-    ArrayList<Dimension> dependent;
+    public ArrayList<Dimension> dependent;
 
     public BeaconCell(int type, int areaOfEffect, int influence, int relativeX, int relativeY) {
         this.id = amount++;
@@ -48,7 +48,7 @@ public class BeaconCell implements CellInterface {
         return areaOfEffect;
     }
 
-    public void setInfluence(int influence) {
+    public void setInfluence(int influence)     {
         if (influence > 100) {
             this.influence = 100;
         }

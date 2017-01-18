@@ -97,4 +97,13 @@ public class Settings implements Serializable{
         Settings settings = (Settings) oin.readObject();
         return settings;
     }
+    /*public String printOutSettings(){
+        String settings="";
+        settings += th
+        settings +=
+        settings +=
+        settings +=
+        settings +=
+        return settings;
+    }*/
 }

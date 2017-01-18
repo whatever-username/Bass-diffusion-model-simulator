@@ -23,8 +23,9 @@ public class AppContext {
     public boolean processing = false;
     public int beaconCellInfuence=0;
     public Cell field[][];
-    public HashMap<Dimension,BeaconCell> beaconCells = new HashMap<>();
+    public HashMap<Dimension,BeaconCell> beaconCells;
     public Cell bufferField[][];
+    public int effectFromBeaconCells[][];
 
     public AppContext(){
         this.fieldManager = new FieldManager();
@@ -32,6 +33,7 @@ public class AppContext {
         this.framesManager = new FramesManager();
         this.settings = new Settings();
         fieldManager.context = this;
+        this.beaconCells = new HashMap<>();
         graphicsOutputManager.context = this;
         framesManager.context = this;
         Mouse.context = this;

@@ -154,6 +154,14 @@ public class FieldManager {
 
 //                        context.beaconCellField[cellY][cellX].setAreaOfEffect(context.areaEffectDiameter);
                     if (type ==0){
+                       /* BeaconCell curBeaconCell;
+                        if ((curBeaconCell=context.beaconCells.get(new Dimension(cellX,cellY))) != null){
+                            for (int i = 0; i < curBeaconCell.dependent.size(); i++) {
+                                //UPD
+                                context.effectFromBeaconCells[cellX+(int)curBeaconCell.dependent.get(i).getWidth()][cellY+(int)curBeaconCell.dependent.get(i).getHeight()] -= curBeaconCell.getInfluence();
+                            }
+                        }*/
+
                         context.beaconCells.remove(new Dimension(cellX,cellY));
                     }else if (context.beaconCells.get(new Dimension(cellX,cellY))!=null)  {
 
@@ -161,7 +169,7 @@ public class FieldManager {
                            @Override
                            public void run() {
                                System.out.println(context.beaconCells.get(new Dimension(cellX, cellY)).toString());
-                               System.out.println(context.beaconCells.get(new Dimension(cellX, cellY)).listDependent());
+
                                try {
                                    Thread.sleep(1000);
                                } catch (InterruptedException e) {
@@ -173,6 +181,16 @@ public class FieldManager {
 
                     }else {
                         context.beaconCells.put(new Dimension(cellX,cellY),new BeaconCell(type,context.areaEffectDiameter,context.beaconCellInfuence, cellX,cellY));
+                        /*BeaconCell curBeaconCell = context.beaconCells.get(new Dimension(cellX,cellY));
+                        for (int i = 0; i < curBeaconCell.dependent.size(); i++) {
+                            //UPD
+                            if ((curBeaconCell.getType() == 1)||(curBeaconCell.getType() == 3)){
+                                context.effectFromBeaconCells[cellX+(int)curBeaconCell.dependent.get(i).getWidth()][cellY+(int)curBeaconCell.dependent.get(i).getHeight()] += curBeaconCell.getInfluence();
+                            }
+                            if (curBeaconCell.getType() == 2){
+                                context.effectFromBeaconCells[cellX+(int)curBeaconCell.dependent.get(i).getWidth()][cellY+(int)curBeaconCell.dependent.get(i).getHeight()] -= curBeaconCell.getInfluence();
+                            }
+                        }*/
 
                     }
                 }
@@ -221,7 +239,8 @@ public class FieldManager {
                     }
                 }
                 double chance = 0;
-
+                //add calculation from array
+//                chance+= context.effectFromBeaconCells[width][height];
 
                 switch (context.field[height][width].getType()) {
                     case 0: /*пустой*/
@@ -230,7 +249,7 @@ public class FieldManager {
                         } else if (positiveNeighboursAmount > context.settings.from1to2UpperTreshold) {/*ЕСЛИ КОЛ-ВО ПОВТОРНО ПОЛЬЗУЮЩИХСЯ БОЛЬЩЕ ВЕРХНЕЙ ГРАНИЦЫ, ТО 100% НЕ ПЕРЕЙДЕТ*/
                             context.bufferField[height][width] = new Cell(1);
                         } else {
-                            chance = context.settings.buffFromPositiveNeighbour * positiveNeighboursAmount
+                            chance = chance + context.settings.buffFromPositiveNeighbour * positiveNeighboursAmount
                                     + context.settings.buffFromNewNeighbour * newNeighboursAmount
                                     - context.settings.buffFromNegativeNeighbour * negativeNeighboursAmount
                                     + context.settings.from1to2SelfChance;
@@ -247,7 +266,7 @@ public class FieldManager {
                         } else if (positiveNeighboursAmount > context.settings.from2to3UpperTreshold) {/*ЕСЛИ КОЛ-ВО ПОВТОРНО ПОЛЬЗУЮЩИХСЯ БОЛЬШЕ ВЕРХНЕЙ ГРАНИЦЫ, ТО 100% ОСТАНЕТСЯ ПОЛЬЗОВАТЕЛЕМ*/
                             context.bufferField[height][width] = new Cell(1);
                         } else {
-                            chance = -context.settings.buffFromPositiveNeighbour * positiveNeighboursAmount
+                            chance = -chance -context.settings.buffFromPositiveNeighbour * positiveNeighboursAmount
                                     - context.settings.buffFromNewNeighbour * newNeighboursAmount
                                     + context.settings.buffFromNegativeNeighbour * negativeNeighboursAmount
                                     + context.settings.from2to3SelfChance;
@@ -267,7 +286,7 @@ public class FieldManager {
                             context.bufferField[height][width] = new Cell(3);
 //                            context.bufferField[height][width].setType(3);
                         } else {
-                            chance = context.settings.buffFromPositiveNeighbour * positiveNeighboursAmount
+                            chance = chance + context.settings.buffFromPositiveNeighbour * positiveNeighboursAmount
                                     + context.settings.buffFromNewNeighbour * newNeighboursAmount
                                     - context.settings.buffFromNegativeNeighbour * negativeNeighboursAmount
                                     + context.settings.from3to4SelfChance;
@@ -288,7 +307,7 @@ public class FieldManager {
                             context.bufferField[height][width] = new Cell(3);
 //                            context.bufferField[height][width].setType(3);
                         } else {
-                            chance = -context.settings.buffFromPositiveNeighbour * positiveNeighboursAmount
+                            chance = -chance-context.settings.buffFromPositiveNeighbour * positiveNeighboursAmount
                                     - context.settings.buffFromNewNeighbour * newNeighboursAmount
                                     + context.settings.buffFromNegativeNeighbour * negativeNeighboursAmount
                                     + context.settings.from4to3SelfChance;
