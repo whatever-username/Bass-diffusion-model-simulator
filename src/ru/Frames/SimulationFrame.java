@@ -18,6 +18,7 @@ public class SimulationFrame extends JFrame {
     JSlider diameter, influence;
     JLabel diameterText, influenceText;
     GridBagConstraints gbc = new GridBagConstraints();
+    public BeaconCellFrame beaconCellFrame;
 
     public SimulationFrame(AppContext context){
         this.context = context;
@@ -48,6 +49,7 @@ public class SimulationFrame extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 context.renderingField = 2;
             }
+
         });
 
         red.setPreferredSize(new Dimension(70, 20));
@@ -123,11 +125,13 @@ public class SimulationFrame extends JFrame {
                 if (context.renderingField ==1){
                     context.renderingField =2;
                     layerButton.setText("Supercells");
+                    beaconCellFrame.setVisible(true);
 
                 }                                       // ЗАМЕНИТЬ НА TRUE FALSE
                 else if (context.renderingField==2){
                     context.renderingField=1;
                     layerButton.setText("Cells");
+                    beaconCellFrame.setVisible(false);
                 }
             }
         });
@@ -239,11 +243,15 @@ public class SimulationFrame extends JFrame {
         gbc.gridx=0; gbc.gridy=4;
         panel.setPreferredSize(new Dimension(600,30));
         add(panel,gbc);
-
         pack();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(null);
+
+        beaconCellFrame = new BeaconCellFrame(context);
+        beaconCellFrame.setLocation(this.getX()+this.getWidth(),this.getY());
+        beaconCellFrame.setVisible(false);
+
         setVisible(true);
         c.createBufferStrategy(2);    // ex. NUM_BUFFERS
         Mouse.create(c);

@@ -16,15 +16,17 @@ public class BeaconCell implements CellInterface {
     int id = 0;
     int type;
     int influence = 0;
+    ArrayList<Integer> influenceArray;  //Test
     int areaOfEffect;
     public ArrayList<Dimension> dependent;
 
-    public BeaconCell(int type, int areaOfEffect, int influence, int relativeX, int relativeY) {
+    public BeaconCell(int type, int areaOfEffect, int influence, int relativeX, int relativeY/*, ArrayList<Integer> influenceData*/) {
         this.id = amount++;
         this.type = type;
         this.areaOfEffect = areaOfEffect;
         setInfluence(influence);
         countDependent(relativeX,relativeY);
+        /*influenceArray = influenceData;*/
 
 
 

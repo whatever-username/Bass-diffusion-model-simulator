@@ -200,6 +200,11 @@ public class FieldManager {
 
 
         }
+        else if (Mouse.isButtonDown(3)){
+            int cellX = Mouse.getCellX();
+            int cellY = Mouse.getCellY();
+            context.framesManager.simulationFrame.beaconCellFrame.updateInfo(cellX, cellY);
+        }
 
     }
     /**
@@ -240,7 +245,7 @@ public class FieldManager {
                 }
                 double chance = 0;
                 //add calculation from array
-//                chance+= context.effectFromBeaconCells[width][height];
+                chance+= context.effectFromBeaconCells[width][height];
 
                 switch (context.field[height][width].getType()) {
                     case 0: /*пустой*/
