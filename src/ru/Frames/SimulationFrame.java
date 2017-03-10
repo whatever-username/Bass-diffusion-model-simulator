@@ -15,8 +15,6 @@ public class SimulationFrame extends JFrame {
     public AppContext context;
     JButton black, blue, red, green, cellField, supercellField;
     JPanel colorButtons, layerButtons, commandPanel;
-    JSlider diameter, influence;
-    JLabel diameterText, influenceText;
     GridBagConstraints gbc = new GridBagConstraints();
     public BeaconCellFrame beaconCellFrame;
 
@@ -142,42 +140,7 @@ public class SimulationFrame extends JFrame {
         gbc.gridx=colomn; gbc.gridwidth=2;
 
 
-        diameter = new JSlider(JSlider.HORIZONTAL, 1, 999, 1);
-        diameter.setPreferredSize(new Dimension(90,20));
-        diameterText = new JLabel("Diameter: 0");
-        diameterText.setPreferredSize(new Dimension(80,20));
 
-        diameter.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                context.areaEffectDiameter = diameter.getValue();
-                diameterText.setText("Diameter: "+context.areaEffectDiameter);
-            }
-        });
-        gbc.gridwidth=1;
-        add(diameter,gbc);
-        line--;
-        gbc.gridy=line;
-        add(diameterText,gbc);
-
-
-        //Влияние суперклеток
-        influence = new JSlider(JSlider.HORIZONTAL,0,100,1);
-        influence.setPreferredSize(new Dimension(80,20));                                 //
-        influence.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                influenceText.setText("Influence: "+influence.getValue());
-                context.beaconCellInfuence = influence.getValue();
-            }
-        });
-        influenceText = new JLabel("Influence: 0");
-        influenceText.setPreferredSize(new Dimension(90,20));
-        line=0; colomn=5;
-        gbc.gridy=line; gbc.gridx = colomn; gbc.gridheight=1;
-        add(influenceText,gbc);
-         gbc.gridy=1;
-        add(influence,gbc);
 
         gbc.insets = new Insets(0,0,0,0);
         colomn=0; line=3;
@@ -200,10 +163,10 @@ public class SimulationFrame extends JFrame {
                     for (int i = 0; i < curBeaconCell.dependent.size(); i++) {
                         //UPD
                         if ((curBeaconCell.getType() == 1)||(curBeaconCell.getType() == 3)){
-                            context.effectFromBeaconCells[x+(int)curBeaconCell.dependent.get(i).getWidth()][y+(int)curBeaconCell.dependent.get(i).getHeight()] += curBeaconCell.getInfluence();
+                            context.effectFromBeaconCells[x+(int)curBeaconCell.dependent.get(i).getWidth()][y+(int)curBeaconCell.dependent.get(i).getHeight()] += curBeaconCell.getInfluence(0);
                         }
                         if (curBeaconCell.getType() == 2){
-                            context.effectFromBeaconCells[x+(int)curBeaconCell.dependent.get(i).getWidth()][y+(int)curBeaconCell.dependent.get(i).getHeight()] -= curBeaconCell.getInfluence();
+                            context.effectFromBeaconCells[x+(int)curBeaconCell.dependent.get(i).getWidth()][y+(int)curBeaconCell.dependent.get(i).getHeight()] -= curBeaconCell.getInfluence(0);
                         }
                     }
                 }

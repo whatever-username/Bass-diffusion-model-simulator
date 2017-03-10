@@ -13,6 +13,8 @@ import ru.AppContext;
 import ru.Util;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
@@ -36,10 +38,14 @@ public class BeaconCellFrame extends JFrame {
     JTextField area, alpha, sigma, start, duration;
     JButton updateGraph;
 
+    JSlider diameter, influence;
+    JLabel diameterText, influenceText;
+
     double alphaValue = 4;
     double sigmaValue = 3;
     int startValue = 100;
     int durationValue = 1000;
+
     public BeaconCellFrame(AppContext context){
         this.context = context;
         GridBagConstraints gbc = new GridBagConstraints();
@@ -57,23 +63,19 @@ public class BeaconCellFrame extends JFrame {
         area = new JTextField(3);
         area.setPreferredSize(new Dimension(29,16));
 
-        gbc.gridx = 0; gbc.gridy = 0;
+        gbc.gridx = 0; gbc.gridy = 0; gbc.gridwidth=1; gbc.insets = new Insets(5,5,5,5);
         add(xPositionLabel,gbc);
         gbc.gridx = 1;
         add(xPosition,gbc);
-        gbc.insets = new Insets(0,100,0,0);
         gbc.gridx = 2;
         add(yPositionLabel,gbc);
-        gbc.insets = new Insets(0,0,0,0);
         gbc.gridx = 3;
         add(yPosition,gbc);
 
-        gbc.gridx = 0; gbc.gridy = 1; gbc.gridwidth=2;
+        gbc.gridx = 0; gbc.gridy = 1;
         add(areaLabel,gbc);
-        gbc.insets = new Insets(0,100,0,0);
         gbc.gridx = 1;
         add(area,gbc);
-        gbc.insets = new Insets(10,100,0,0);
 
         alphaLabel = new JLabel("α: ");
         gbc.gridx = 0; gbc.gridy = 2;
@@ -103,6 +105,44 @@ public class BeaconCellFrame extends JFrame {
 
         gbc.gridx = 1; gbc.gridy = 5;
         add(duration,gbc);
+                                                                                                            //
+        diameter = new JSlider(JSlider.HORIZONTAL, 1, 999, 1);
+        diameter.setPreferredSize(new Dimension(80,20));
+        diameterText = new JLabel("Diameter: 0");
+        diameterText.setPreferredSize(new Dimension(220,20));
+        diameter.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+//                context.areaEffectDiameter = diameter.getValue();
+
+                diameterText.setText("Diameter: "+diameter.getValue());
+            }
+        });
+        gbc.gridx = 0; gbc.gridwidth=2; gbc.gridy = 6;
+        add(diameterText,gbc);
+         gbc.gridx = 1;
+        add(diameter,gbc);
+
+
+
+        //Влияние суперклеток
+        influence = new JSlider(JSlider.HORIZONTAL,0,999,1);
+        influence.setPreferredSize(new Dimension(80,20));
+        influence.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                influenceText.setText("Influence: "+influence.getValue());
+
+            }
+        });
+        influenceText = new JLabel("Influence: 0");
+        influenceText.setPreferredSize(new Dimension(220,20));
+        gbc.gridy=7; gbc.gridx = 0;
+        add(influenceText,gbc);
+        gbc.gridx=1;
+        add(influence,gbc);
+                                                                            //asdasa
+
         dataset = new XYSeriesCollection();
         series = new XYSeries("data",true,false);
         java.util.List<Double> dataList = Util.calculateData(3,3,100,0,1);
@@ -118,7 +158,7 @@ public class BeaconCellFrame extends JFrame {
 
         chart = initChart(alphaValue,sigmaValue,durationValue,startValue);
 
-        gbc.gridx=0; gbc.gridy=6; gbc.gridwidth=3;
+        gbc.gridx=0; gbc.gridy=8; gbc.gridwidth=3;
         panel =new ChartPanel(chart);
         panel.setSize(new Dimension(200,200));
         panel.setPreferredSize(new Dimension(200,200));
@@ -126,21 +166,25 @@ public class BeaconCellFrame extends JFrame {
         add(panel,gbc);
         panel.setVisible(true);
         JFrame thisFrame = this;
-        updateGraph = new JButton("⟲");
+        updateGraph = new JButton("set");
         updateGraph.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                alphaValue = Double.parseDouble(alpha.getText());
-                sigmaValue = Double.parseDouble(sigma.getText());
+                alphaValue = (double)Integer.parseInt(alpha.getText());
+                sigmaValue = (double)Integer.parseInt(sigma.getText());
                 durationValue = Integer.parseInt(duration.getText());
                 startValue = Integer.parseInt(start.getText());
                 thisFrame.getContentPane().remove(panel);
+                context.beaconCells.get(new Dimension(Integer.parseInt(xPosition.getText()),Integer.parseInt(yPosition.getText()))).setAreaOfEffect(diameter.getValue());
+                context.beaconCells.get(new Dimension(Integer.parseInt(xPosition.getText()),Integer.parseInt(yPosition.getText())))
+                        .setInfluenceArray(Util.calculateData(alphaValue,sigmaValue,durationValue,startValue,influence.getValue()));
+                context.beaconCells.get(new Dimension(Integer.parseInt(xPosition.getText()),Integer.parseInt(yPosition.getText()))).countDependent(Integer.parseInt(xPosition.getText()),Integer.parseInt(yPosition.getText()));
                 chart = initChart(alphaValue,sigmaValue,durationValue,startValue);
                 panel = new ChartPanel(chart);
                 panel.setSize(new Dimension(200,200));
                 panel.setPreferredSize(new Dimension(200,200));
                 panel.setMinimumSize(new Dimension(200,200));
-                gbc.gridx=0; gbc.gridy=6; gbc.gridwidth=3;
+                gbc.gridx=0; gbc.gridy=8; gbc.gridwidth=3;
                 thisFrame.add(panel,gbc);
 
                 thisFrame.revalidate();
@@ -149,10 +193,10 @@ public class BeaconCellFrame extends JFrame {
 
             }
         });
-        updateGraph.setPreferredSize(new Dimension(40,30));
-        updateGraph.setSize(new Dimension(40,30));
-        updateGraph.setMinimumSize(new Dimension(40,30));
-        gbc.gridy = 7; gbc.gridwidth = 4;
+        updateGraph.setPreferredSize(new Dimension(40,40));
+        updateGraph.setSize(new Dimension(40,40));
+        updateGraph.setMinimumSize(new Dimension(40,40));
+        gbc.gridy = 9; gbc.gridwidth = 4;
         add(updateGraph,gbc);
 
         setVisible(true);
@@ -173,7 +217,7 @@ public class BeaconCellFrame extends JFrame {
     public JFreeChart initChart (double a, double s, int duration, int startTime){
         this.dataset = new XYSeriesCollection();
         this.series = new XYSeries("data",true,false);
-        java.util.List<Double> dataList = Util.calculateData(a,s,duration,startTime,1);
+        java.util.List<Double> dataList = Util.calculateData(a,s,duration,startTime,influence.getValue());
         double x=0;
         for (int i = 0; i < dataList.size(); i++) {
             this.series.add(x*10,dataList.get(i));

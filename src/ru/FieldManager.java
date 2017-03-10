@@ -168,7 +168,7 @@ public class FieldManager {
                        Thread thread = new Thread(new Runnable() {
                            @Override
                            public void run() {
-                               System.out.println(context.beaconCells.get(new Dimension(cellX, cellY)).toString());
+//                               System.out.println(context.beaconCells.get(new Dimension(cellX, cellY)).toString());
 
                                try {
                                    Thread.sleep(1000);
@@ -180,7 +180,9 @@ public class FieldManager {
                         thread.run();
 
                     }else {
-                        context.beaconCells.put(new Dimension(cellX,cellY),new BeaconCell(type,context.areaEffectDiameter,context.beaconCellInfuence, cellX,cellY));
+//                        context.beaconCells.put(new Dimension(cellX,cellY),new BeaconCell(type,context.areaEffectDiameter,context.beaconCellInfuence, cellX,cellY));  1
+                        context.beaconCells.put(new Dimension(cellX,cellY),new BeaconCell(type,0, cellX,cellY, Util.calculateData(1,1,1000,100,1)));
+
                         /*BeaconCell curBeaconCell = context.beaconCells.get(new Dimension(cellX,cellY));
                         for (int i = 0; i < curBeaconCell.dependent.size(); i++) {
                             //UPD

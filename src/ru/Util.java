@@ -37,6 +37,7 @@ public class Util {
             data.add(f*influence);
             x+=0.1;
         }
+
         return data;
     }
 }

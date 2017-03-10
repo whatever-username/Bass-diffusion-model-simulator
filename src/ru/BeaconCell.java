@@ -15,18 +15,21 @@ public class BeaconCell implements CellInterface {
 
     int id = 0;
     int type;
-    int influence = 0;
-    ArrayList<Integer> influenceArray;  //Test
+    /*int influence = 0;*/
+    ArrayList<Double> influenceArray;  //Test
     int areaOfEffect;
     public ArrayList<Dimension> dependent;
+    private int x,y;
 
-    public BeaconCell(int type, int areaOfEffect, int influence, int relativeX, int relativeY/*, ArrayList<Integer> influenceData*/) {
+    public BeaconCell(int type, int areaOfEffect/*, int influence*/, int relativeX, int relativeY, ArrayList<Double> influenceData) {
         this.id = amount++;
         this.type = type;
         this.areaOfEffect = areaOfEffect;
-        setInfluence(influence);
+        this.x = relativeX;
+        this.y = relativeY;
+        /*setInfluence(influence);*/
         countDependent(relativeX,relativeY);
-        /*influenceArray = influenceData;*/
+        influenceArray = influenceData;
 
 
 
@@ -50,16 +53,26 @@ public class BeaconCell implements CellInterface {
         return areaOfEffect;
     }
 
-    public void setInfluence(int influence)     {
+    /*public void setInfluence(int influence)     {
         if (influence > 100) {
             this.influence = 100;
         }
         this.influence = influence;
 
+    }*/
+
+    public void setInfluenceArray(ArrayList<Double> influenceArray) {
+        this.influenceArray = influenceArray;
     }
 
-    public int getInfluence() {
-        return influence;
+    public int getInfluence(int stage) {
+        try{
+            return (int)Math.round(influenceArray.get(stage));
+        }catch (IndexOutOfBoundsException e){
+            context.beaconCells.remove(new Dimension(x,y));
+            return 0;
+        }
+
     }
 
     public ArrayList getDependent() {
@@ -82,7 +95,7 @@ public class BeaconCell implements CellInterface {
 
     @Override
     public String toString() {
-        return ("Beacon #" + id + "; type: " + type + "; area of effect: " + areaOfEffect+ "; dependent cells: "+dependent.size()+"; influence:" + influence);
+        return ("Beacon #" + id + "; type: " + type + "; area of effect: " + areaOfEffect+ "; dependent cells: "+dependent.size());
     }
     public String listDependent(){
 
@@ -116,6 +129,7 @@ public class BeaconCell implements CellInterface {
             }
 
         }
+        System.out.println(list);
         this.dependent = list;
     }
  }

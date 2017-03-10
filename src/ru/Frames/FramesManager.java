@@ -134,73 +134,7 @@ public class FramesManager {
         buffer.show();
     }
 
-    /*public void renderBeaconCells(){
-        BufferStrategy buffer = simulationFrame.c.getBufferStrategy();
-        Graphics2D graph = (Graphics2D) buffer.getDrawGraphics();
-        graph.setColor(Color.white);
-        graph.fillRect(0,0,1000,1000);
-        Set set = context.beaconCells.entrySet();
-        Iterator iter = set.iterator();
-        while (iter.hasNext()){
-            Map.Entry cur = (Map.Entry)iter.next();
 
-            int diameter = ((BeaconCell) cur.getValue()).getAreaOfEffect();
-            int type = ((BeaconCell) cur.getValue()).getType();
-            int width = ((Dimension)cur.getKey()).width * (600 / context.settings.fieldWidth);
-            int height = ((Dimension)cur.getKey()).height * (600 / context.settings.fieldHeight);
-            int areaInCells = (diameter/2  /(600/context.settings.fieldHeight) );
-            for (int i = -areaInCells; i <= areaInCells; i++) {
-                for (int j = -areaInCells; j <= areaInCells; j++) {
-
-
-                    int cellCenterX = width+i*(600 / context.settings.fieldWidth)+(300/context.settings.fieldWidth);
-                    int cellCenterY = height+j*(600 / context.settings.fieldWidth)+(300/context.settings.fieldWidth);
-                    if (Math.pow(Math.pow(cellCenterX - width - (300 / context.settings.fieldWidth), 2) + Math.pow(cellCenterY - height - (300 / context.settings.fieldWidth), 2), 0.5) < diameter/2){
-                        switch (type){
-                            case 1:
-                                graph.setColor(new Color(0,0,255,((BeaconCell) cur.getValue()).getInfluence()));
-                                break;
-                            case 2:
-                                graph.setColor(new Color(255,0,0,((BeaconCell) cur.getValue()).getInfluence()));
-                                break;
-                            case 3:
-                                graph.setColor(new Color(0,255,0,((BeaconCell) cur.getValue()).getInfluence()));
-                                break;
-                            default:
-                                break;
-                        }
-                        if (type != 0){
-                            graph.fillRect(cellCenterX-(300/context.settings.fieldWidth),cellCenterY-(300/context.settings.fieldWidth),(600 / context.settings.fieldWidth),(600 / context.settings.fieldWidth));
-                        }
-                    }
-
-
-
-                }
-            }
-            switch (type){
-                case 0:
-                    graph.setColor(Color.black);
-                    break;
-                case 1:
-                    graph.setColor(Color.blue);
-                    break;
-                case 2:
-                    graph.setColor(Color.red);
-                    break;
-                case 3:
-                    graph.setColor(Color.green);
-                    break;
-            }
-            if (((BeaconCell)cur.getValue()).getType() !=0){
-
-                graph.drawOval(width-diameter/2+(300/context.settings.fieldWidth), height-diameter/2+(300/context.settings.fieldWidth),diameter,diameter);
-            }
-            graph.fillRect(width,height , (600 / context.settings.fieldWidth), (600 / context.settings.fieldHeight));
-
-        }
-
-    }*/
     public void renderBeaconCells() {
         BufferStrategy buffer = simulationFrame.c.getBufferStrategy();
         Graphics2D graph = (Graphics2D) buffer.getDrawGraphics();
@@ -217,13 +151,14 @@ public class FramesManager {
             for (int i = 0; i < dependent.size(); i++) {
                 switch (((BeaconCell) cur.getValue()).getType()) { //Dimension
                     case 1:
-                        graph.setColor(new Color(0,0,255,curBeaconCell.getInfluence()));
+                        graph.setColor(new Color(0,0,255,curBeaconCell.getInfluence(context.fieldManager.getStage())));
+
                         break;
                     case 2:
-                        graph.setColor(new Color(255,0,0,curBeaconCell.getInfluence()));
+                        graph.setColor(new Color(255,0,0,curBeaconCell.getInfluence(context.fieldManager.getStage())));
                         break;
                     case 3:
-                        graph.setColor(new Color(0,255,0,curBeaconCell.getInfluence()));
+                        graph.setColor(new Color(0,255,0,curBeaconCell.getInfluence(context.fieldManager.getStage())));
                         break;
                     default:
                         break;
